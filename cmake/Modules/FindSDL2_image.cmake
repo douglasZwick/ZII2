@@ -16,7 +16,7 @@ include(FindPackageHandleStandardArgs)
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
   set(SDL2_IMAGE_ARCH_SUFFIX x64)
 else()
-  set(SDL2_IMAGE_ARCH_SUFFIX x32)
+  set(SDL2_IMAGE_ARCH_SUFFIX x86)
 endif()
 
 ################################################################################

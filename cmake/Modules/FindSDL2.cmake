@@ -16,7 +16,7 @@ include(FindPackageHandleStandardArgs)
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
   set(SDL2_ARCH_SUFFIX x64)
 else()
-  set(SDL2_ARCH_SUFFIX x32)
+  set(SDL2_ARCH_SUFFIX x86)
 endif()
 
 ################################################################################
@@ -104,6 +104,6 @@ set(SDL2_LIBRARIES ${SDL2_LIBRARY} ${SDL2_LIBRARY_MAIN})
 find_package_handle_standard_args(
   SDL2
   REQUIRED_VARS
-	SDL2_LIBRARIES
-	SDL2_INCLUDE_DIR
+    SDL2_LIBRARIES
+    SDL2_INCLUDE_DIR
 )
