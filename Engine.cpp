@@ -232,4 +232,4 @@ void Engine::InitializeBGFX(int32_t _argc, const char * const * _argv, uint32_t 
 
 }
 
-}
+} // namespace ZII2

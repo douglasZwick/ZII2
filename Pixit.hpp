@@ -38,11 +38,16 @@ public:
   // Perhaps controversially, ++ and -- operate on subpixels
   void operator--();
 
+  int GetPixels() const;
+  int GetSubpixels() const;
+
   bool IsPos() const;
   bool IsZero() const;
   bool IsNeg() const;
 
-  static unsigned int sSubpixelResolution;
+  static unsigned int GetSubpixelResolution();
+  static bool SetSubpixelResolution(int resolution);
+
   static const std::string sDelimiter;
   static const Pixit Zero;
   static const Pixit One;
@@ -50,6 +55,8 @@ public:
 private:
   signed   int mPixels;
   unsigned int mSubpixels;
+
+  static unsigned int sSubpixelResolution;
 
   friend Pixit operator+(Pixit const & lhs, Pixit const & rhs);
   friend Pixit operator-(Pixit const & lhs, Pixit const & rhs);
@@ -62,8 +69,8 @@ private:
   friend bool operator<(Pixit const & lhs, Pixit const & rhs);
   friend bool operator<=(Pixit const & lhs, Pixit const & rhs);
   friend std::ostream & operator<<(std::ostream & out, Pixit const & pixit);
-};
+}; // class Pixit
 
-}
+} // namespace ZII2
 
 #endif // PIXIT_H

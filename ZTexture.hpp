@@ -3,12 +3,15 @@
 
 #include <SDL.h>
 
+namespace ZII2
+{
+
 class ZTexture
 {
 public:
   ZTexture(SDL_Renderer * renderer = nullptr);
   ~ZTexture();
-  
+
   // loads image at specified path
   bool LoadFromFile(std::string path);
   // deallocates the texture
@@ -41,6 +44,8 @@ private:
   int mHeight;
   float mScaleX;
   float mScaleY;
-};
+}; // class ZTexture
+
+} // namespace ZII2
 
 #endif // ZTEXTURE_H

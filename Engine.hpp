@@ -40,8 +40,8 @@ private:
   static const int sAnimationFrameCount = 6;
   SDL_Rect mSpriteClips[sAnimationFrameCount];
   ZTexture mSpriteSheet;
-};
+}; // class Engine
 
-}
+} // namespace ZII2
 
 #endif // ENGINE_H

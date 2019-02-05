@@ -23,13 +23,14 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(bgfx REQUIRED)
+find_package(googletest)
 
 ################################################################################
 # Build Practice Executable
 ################################################################################
-add_executable(
-  Practice
-  main.cpp
+
+add_library(
+  ZII2_Engine
   Defines.hpp
   Engine.cpp
   Engine.hpp
@@ -41,9 +42,49 @@ add_executable(
   ZTexture.hpp
 )
 
-target_include_directories(
+add_executable(
   Practice
-  PRIVATE
+  main.cpp
+)
+
+target_link_libraries(Practice ZII2_Engine)
+
+option(ZII2_BUILD_TESTS
+  "Do you want to build unit tests?"
+  OFF
+)
+
+if(ZII2_BUILD_TESTS)
+  add_executable(
+    ZII2_Tests
+    gtest_runner.cpp
+    ZII2_Tests_Main.cpp
+  )
+  
+  target_link_libraries(ZII2_Tests ZII2_Engine)
+  
+  target_include_directories(
+    ZII2_Tests
+    PRIVATE
+      ${GOOGLETEST_INCLUDE_DIR}
+  )
+  
+  target_link_libraries(
+    ZII2_Tests
+    debug
+      ${GOOGLETEST_LIBRARIES_DEBUG}
+  )
+  
+  target_link_libraries(
+    ZII2_Tests
+    optimized
+      ${GOOGLETEST_LIBRARIES_RELEASE}
+  )
+endif()
+
+target_include_directories(
+  ZII2_Engine
+  PUBLIC
     ${SDL2_INCLUDE_DIR}
     ${SDL2_IMAGE_INCLUDE_DIR}
     ${BGFX_INCLUDE_DIR}
@@ -52,13 +93,13 @@ target_include_directories(
 )
 
 target_link_libraries(
-  Practice
+  ZII2_Engine
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARY}
 )
 
 target_link_libraries(
-  Practice
+  ZII2_Engine
   debug
     ${BGFX_LIBRARY_DEBUG}
     ${BIMG_LIBRARY_DEBUG}
@@ -66,7 +107,7 @@ target_link_libraries(
 )
 
 target_link_libraries(
-  Practice
+  ZII2_Engine
   optimized
     ${BGFX_LIBRARY_RELEASE}
     ${BIMG_LIBRARY_RELEASE}

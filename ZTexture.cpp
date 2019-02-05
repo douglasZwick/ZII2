@@ -3,9 +3,12 @@
 #include <SDL_image.h>
 #include "ZTexture.hpp"
 
+namespace ZII2
+{
+
 ZTexture::ZTexture(SDL_Renderer * renderer)
   : mTexture(nullptr), mRenderer(renderer),
-    mWidth(0), mHeight(0), mScaleX(1.0f), mScaleY(1.0f)
+  mWidth(0), mHeight(0), mScaleX(1.0f), mScaleY(1.0f)
 {}
 
 ZTexture::~ZTexture()
@@ -137,4 +140,6 @@ void ZTexture::SetScaleY(float y)
 void ZTexture::SetScale(float x, float y)
 {
   mScaleX = x; mScaleY = y;
+}
+
 }

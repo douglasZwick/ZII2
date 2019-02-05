@@ -4,7 +4,7 @@ namespace ZII2
 {
 
 unsigned int Pixit::sSubpixelResolution = 16;
-const std::string sDelimiter = "_";
+const std::string Pixit::sDelimiter = "_";
 const Pixit Pixit::Zero = Pixit();
 const Pixit Pixit::One = Pixit(1);
 
@@ -27,28 +27,26 @@ Pixit::Pixit(int pixels)
 Pixit::Pixit(float value)
 {
   // First, mPixels gets the integer truncation of the value. This
-  // is sure to be true regardless of whether the value is negative
+  // is sure to be true regardless of whether the value is negative,
+  // but it may be adjusted later
   mPixels = int(value);
   // Then, the value is decremented by mPixels, leaving just the
   // fractional part. Again, this is true regardless of whether the
   // value is negative
   value -= float(mPixels);
-  // A temporary subpixel value is calculated
-  int tempSubpixels = value * sSubpixelResolution;
 
-  // If the temporary value is positive, then it can be assigned
-  // directly to mSubpixels and we're done
-  what if (tempSubpixels >= 0)
+  // Now the subpixels need to be calculated.
+  // But what if the fractional value is negative?
+  what if (value < 0.0f)
   {
-    mSubpixels = tempSubpixels;
-  }
-  // Otherwise, mPixels should be decremented and mSubpixels
-  // should get the pixel's complement of the temporary value
-  what else
-  {
-    mSubpixels = sSubpixelResolution + tempSubpixels;
+    // In this case, we need to borrow from mPixels
     --mPixels;
+    value += 1.0f;
   }
+
+  // Finally, whether the value was negative or not, the subpixels
+  // can be calculated
+  mSubpixels = int(value * sSubpixelResolution);
 }
 
 Pixit::~Pixit() {}
@@ -77,6 +75,7 @@ Pixit const & Pixit::operator=(Pixit const & rhs)
 
 void Pixit::operator+=(Pixit const & rhs)
 {
+  mPixels += rhs.mPixels;
   mSubpixels += rhs.mSubpixels;
   mPixels += mSubpixels / sSubpixelResolution;
   mSubpixels = mSubpixels % sSubpixelResolution;
@@ -134,6 +133,16 @@ void Pixit::operator--()
   --mSubpixels;
 }
 
+int Pixit::GetPixels() const
+{
+  return mPixels;
+}
+
+int Pixit::GetSubpixels() const
+{
+  return mSubpixels;
+}
+
 bool Pixit::IsPos() const
 {
   return mPixels > 0;
@@ -147,6 +156,20 @@ bool Pixit::IsZero() const
 bool Pixit::IsNeg() const
 {
   return mPixels < 0;
+}
+
+unsigned int Pixit::GetSubpixelResolution()
+{
+  return sSubpixelResolution;
+}
+
+bool Pixit::SetSubpixelResolution(int resolution)
+{
+  if (resolution < 1)
+    return false;
+
+  sSubpixelResolution = resolution;
+  return true;
 }
 
 // FRIENDS AND FAMILY //
@@ -213,4 +236,4 @@ std::ostream & operator<<(std::ostream & out, Pixit const & pixit)
   return out << pixit.mPixels << Pixit::sDelimiter << pixit.mSubpixels;
 }
 
-}
+} // namespace ZII2
