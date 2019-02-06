@@ -19,19 +19,21 @@ public:
   Pixit();
   Pixit(Pixit const & rhs);
   Pixit(int pixels, unsigned int subpixels);
-  Pixit(int pixels);
-  Pixit(float value);
+  explicit Pixit(int pixels);
+  explicit Pixit(float value);
   ~Pixit();
 
-  operator int() const;
-  operator bool() const;
-  operator float() const;
+  explicit operator int() const;
+  explicit operator bool() const;
+  explicit operator float() const;
 
   Pixit const & operator=(Pixit const & rhs);
   void operator+=(Pixit const & rhs);
   void operator-=(Pixit const & rhs);
   void operator*=(Pixit const & rhs);
+  void operator*=(float rhs);
   void operator/=(Pixit const & rhs);
+  void operator/=(float rhs);
   Pixit operator-() const;
   // Perhaps controversially, ++ and -- operate on subpixels
   void operator++();
@@ -48,7 +50,7 @@ public:
   static unsigned int GetSubpixelResolution();
   static bool SetSubpixelResolution(int resolution);
 
-  static const std::string sDelimiter;
+  static std::string sDelimiter;
   static const Pixit Zero;
   static const Pixit One;
 
@@ -61,7 +63,10 @@ private:
   friend Pixit operator+(Pixit const & lhs, Pixit const & rhs);
   friend Pixit operator-(Pixit const & lhs, Pixit const & rhs);
   friend Pixit operator*(Pixit const & lhs, Pixit const & rhs);
+  friend Pixit operator*(Pixit const & lhs, float rhs);
+  friend Pixit operator*(float lhs, Pixit const & rhs);
   friend Pixit operator/(Pixit const & lhs, Pixit const & rhs);
+  friend Pixit operator/(Pixit const & lhs, float rhs);
   friend bool operator==(Pixit const & lhs, Pixit const & rhs);
   friend bool operator!=(Pixit const & lhs, Pixit const & rhs);
   friend bool operator>(Pixit const & lhs, Pixit const & rhs);

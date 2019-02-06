@@ -4,7 +4,7 @@ namespace ZII2
 {
 
 unsigned int Pixit::sSubpixelResolution = 16;
-const std::string Pixit::sDelimiter = "_";
+std::string Pixit::sDelimiter = "_";
 const Pixit Pixit::Zero = Pixit();
 const Pixit Pixit::One = Pixit(1);
 
@@ -37,7 +37,7 @@ Pixit::Pixit(float value)
 
   // Now the subpixels need to be calculated.
   // But what if the fractional value is negative?
-  what if (value < 0.0f)
+  if (value < 0.0f)
   {
     // In this case, we need to borrow from mPixels
     --mPixels;
@@ -96,19 +96,38 @@ void Pixit::operator*=(Pixit const & rhs)
 {
   float lhsFloat = float(*this);
   float rhsFloat = float(rhs);
-  (*this) = Pixit(lhsFloat * rhsFloat);
+  new (this) Pixit(lhsFloat * rhsFloat);
+}
+
+void Pixit::operator*=(float rhs)
+{
+  float lhsFloat = float(*this);
+  new (this) Pixit(lhsFloat * rhs);
 }
 
 void Pixit::operator/=(Pixit const & rhs)
 {
   float lhsFloat = float(*this);
   float rhsFloat = float(rhs);
-  (*this) = Pixit(lhsFloat / rhsFloat);
+  new (this) Pixit(lhsFloat / rhsFloat);
+}
+
+void Pixit::operator/=(float rhs)
+{
+  // See comments in operator*=(float)
+  float lhsFloat = float(*this);
+  new (this) Pixit(lhsFloat / rhs);
 }
 
 Pixit Pixit::operator-() const
 {
-  return Zero - *this;
+  Pixit output = Pixit(-mPixels);
+  if (mSubpixels == 0)
+    return output;
+
+  --output.mPixels;
+  output.mSubpixels = sSubpixelResolution - mSubpixels;
+  return output;
 }
 
 void Pixit::operator++()
@@ -145,7 +164,7 @@ int Pixit::GetSubpixels() const
 
 bool Pixit::IsPos() const
 {
-  return mPixels > 0;
+  return mPixels > 0 || mPixels == 0 && mSubpixels > 0;
 }
 
 bool Pixit::IsZero() const
@@ -189,16 +208,33 @@ Pixit operator-(Pixit const & lhs, Pixit const & rhs)
 
 Pixit operator*(Pixit const & lhs, Pixit const & rhs)
 {
-  Pixit output = lhs;
-  output *= rhs;
-  return output;
+  float lhsFloat = float(lhs);
+  float rhsFloat = float(rhs);
+  return Pixit(lhsFloat * rhsFloat);
+}
+
+Pixit operator*(Pixit const & lhs, float rhs)
+{
+  float lhsFloat = float(lhs);
+  return Pixit(lhsFloat * rhs);
+}
+
+Pixit operator*(float lhs, Pixit const & rhs)
+{
+  return rhs * lhs;
 }
 
 Pixit operator/(Pixit const & lhs, Pixit const & rhs)
 {
-  Pixit output = lhs;
-  output /= rhs;
-  return output;
+  float lhsFloat = float(lhs);
+  float rhsFloat = float(rhs);
+  return Pixit(lhsFloat / rhsFloat);
+}
+
+Pixit operator/(Pixit const & lhs, float rhs)
+{
+  float lhsFloat = float(lhs);
+  return Pixit(lhsFloat / rhs);
 }
 
 bool operator==(Pixit const & lhs, Pixit const & rhs)

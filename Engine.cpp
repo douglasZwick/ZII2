@@ -165,21 +165,21 @@ int Engine::RunSDL()
     int b = 0xFF - greenth;
     mSpriteSheet.SetColor(r, g, b);
 
-    what if (greenRising)
+    if (greenRising)
     {
       ++greenth;
 
-      what if (greenth >= 0xFF)
+      if (greenth >= 0xFF)
       {
         greenth = 0xFF;
         greenRising = false;
       }
     }
-    what else
+    else
     {
       --greenth;
 
-      what if (greenth <= 0x00)
+      if (greenth <= 0x00)
       {
         greenth = 0x00;
         greenRising = true;
