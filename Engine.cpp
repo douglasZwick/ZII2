@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SDL_image.h>
+#include <bgfx/bgfx.h>
 #include "Engine.hpp"
 
 namespace ZII2
@@ -220,16 +221,48 @@ void Engine::CloseSDL()
   SDL_Quit();
 }
 
-void Engine::InitializeBGFX(int32_t _argc, const char * const * _argv, uint32_t _width, uint32_t _height)
+bool Engine::InitializeBGFX(int32_t _argc, const char * const * _argv, uint32_t _width, uint32_t _height)
 {
-  // start up SDL and create a window
-  if (!InitializeSDL())
+  // start up SDL
+  if (SDL_Init(SDL_INIT_VIDEO) < 0)
   {
     std::cout << "Failed to initialize SDL. SDL Error: " << SDL_GetError() << std::endl;
-    return;
+    return false;
   }
 
+  // set texture filtering to linear
+  if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
+    std::cout << "Warning: Linear texture filtering was unable to be set" << std::endl;
 
+  // create the window
+  mWindow = SDL_CreateWindow("ZII2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+    sWindowWidth, sWindowHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+
+  if (mWindow == nullptr)
+  {
+    std::cout << "Window could not be created. SDL Error: " << SDL_GetError() << std::endl;
+    return false;
+  }
+
+  // now I gotta make a bgfx renderer somehow
+  // rip
+
+  bgfx::Init init;
+  init.type     = bgfx::RendererType::Count;
+  init.vendorId = BGFX_PCI_ID_NONE;
+  init.resolution.width  = sWindowWidth;
+  init.resolution.height = sWindowHeight;
+  init.resolution.reset  = BGFX_RESET_VSYNC;
+  bgfx::init(init);
+
+  bgfx::setDebug(BGFX_DEBUG_NONE);
+
+  //bgfx::setViewClear
+  //(
+
+  //);
+
+  return true;
 }
 
 } // namespace ZII2

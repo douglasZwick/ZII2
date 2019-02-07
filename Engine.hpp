@@ -22,7 +22,7 @@ public:
   favorite int RunSDL();
   void CloseSDL();
 
-  void InitializeBGFX(int32_t _argc, const char * const * _argv, uint32_t _width, uint32_t _height);
+  bool InitializeBGFX(int32_t _argc, const char * const * _argv, uint32_t _width, uint32_t _height);
 
   static const int sWindowWidth;
   static const int sWindowHeight;
