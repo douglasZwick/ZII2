@@ -1,6 +1,8 @@
 #include <iostream>
+#include <SDL_syswm.h>
 #include <SDL_image.h>
 #include <bgfx/bgfx.h>
+#include <bgfx/platform.h>
 #include "Engine.hpp"
 
 namespace ZII2
@@ -221,7 +223,7 @@ void Engine::CloseSDL()
   SDL_Quit();
 }
 
-bool Engine::InitializeBGFX(int32_t _argc, const char * const * _argv, uint32_t _width, uint32_t _height)
+bool Engine::InitializeBGFX()
 {
   // start up SDL
   if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -247,22 +249,95 @@ bool Engine::InitializeBGFX(int32_t _argc, const char * const * _argv, uint32_t 
   // now I gotta make a bgfx renderer somehow
   // rip
 
+  SDL_SysWMinfo wmi;
+  SDL_VERSION(&wmi.version);
+  if (!SDL_GetWindowWMInfo(mWindow, &wmi))
+  {
+    std::cout << "SDL_GetWindowWMInfo failed I guess? SDL Error: " << SDL_GetError() << std::endl;
+    return false;
+  }
+
   bgfx::Init init;
   init.type     = bgfx::RendererType::Count;
   init.vendorId = BGFX_PCI_ID_NONE;
   init.resolution.width  = sWindowWidth;
   init.resolution.height = sWindowHeight;
   init.resolution.reset  = BGFX_RESET_VSYNC;
+  // assuming Windows only for now
+  init.platformData.ndt          = nullptr;
+  init.platformData.nwh          = wmi.info.win.window;
+  init.platformData.context      = nullptr;
+  init.platformData.backBuffer   = nullptr;
+  init.platformData.backBufferDS = nullptr;
   bgfx::init(init);
 
   bgfx::setDebug(BGFX_DEBUG_NONE);
 
-  //bgfx::setViewClear
-  //(
-
-  //);
+  bgfx::setViewClear
+  (
+    0,                                    // ViewId   _id
+    BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH,  // uint16_t _flags
+    0x0000FFFF,                           // uint32_t _rgba
+    1.0f,                                 // float    _depth
+    0                                     // uint8_t  _stencil
+  );
 
   return true;
+}
+
+int Engine::RunBGFX()
+{
+  // set things up with bgfx (which, in turn, sets things up with SDL)
+  if (!InitializeBGFX()) return -1;
+
+  // main loop flag
+  bool quit = false;
+
+  // event handler
+  SDL_Event e;
+
+  // keep going as long as the application is running
+  while (!quit)
+  {
+    // handle the event queue
+    while (SDL_PollEvent(&e) > 0)
+    {
+      switch (e.type)
+      {
+        // quit if the user asks for it
+      case SDL_QUIT:
+        quit = true;
+        break;
+      case SDL_KEYDOWN:
+        switch (e.key.keysym.sym)
+        {
+        case SDLK_ESCAPE:
+          quit = true;
+          break;
+        }
+        break;
+      }
+    }
+
+    bgfx::touch(0);
+    //bgfx::renderFrame(16);
+    bgfx::frame();
+  }
+
+  // free everything and close up shop
+  CloseBGFX();
+
+  return 0;
+}
+
+void Engine::CloseBGFX()
+{
+  bgfx::shutdown();
+
+  SDL_DestroyWindow(mWindow);
+  mWindow = nullptr;
+  // quit the SDL subsystems
+  SDL_Quit();
 }
 
 } // namespace ZII2
