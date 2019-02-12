@@ -34,6 +34,20 @@ add_library(
   Defines.hpp
   Engine.cpp
   Engine.hpp
+  System.cpp
+  System.hpp
+  GraphicsSystem.cpp
+  GraphicsSystem.hpp
+  Cog.cpp
+  Cog.hpp
+  Component.cpp
+  Component.hpp
+  Transform.cpp
+  Transform.hpp
+  Sprite.cpp
+  Sprite.hpp
+  Color.cpp
+  Color.hpp
   Pixit.cpp
   Pixit.hpp
   ZMath.cpp

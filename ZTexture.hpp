@@ -9,11 +9,16 @@ namespace ZII2
 class ZTexture
 {
 public:
+  double mAngle;
+  bool mFlipX;
+  bool mFlipY;
+  SDL_Point mCenter;
+
   ZTexture(SDL_Renderer * renderer = nullptr);
   ~ZTexture();
 
   // loads image at specified path
-  bool LoadFromFile(std::string path);
+  bool LoadFromFile(std::string const & path);
   // deallocates the texture
   void Free();
   // sets color

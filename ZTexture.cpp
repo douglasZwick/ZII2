@@ -8,7 +8,8 @@ namespace ZII2
 
 ZTexture::ZTexture(SDL_Renderer * renderer)
   : mTexture(nullptr), mRenderer(renderer),
-  mWidth(0), mHeight(0), mScaleX(1.0f), mScaleY(1.0f)
+  mWidth(0), mHeight(0), mScaleX(1.0f), mScaleY(1.0f),
+  mAngle(0.0), mFlipX(false), mFlipY(false), mCenter(SDL_Point())
 {}
 
 ZTexture::~ZTexture()
@@ -16,7 +17,7 @@ ZTexture::~ZTexture()
   Free();
 }
 
-bool ZTexture::LoadFromFile(std::string path)
+bool ZTexture::LoadFromFile(std::string const & path)
 {
   // if anything is already there, detch et
   Free();
@@ -86,9 +87,8 @@ void ZTexture::SetBlendMode(SDL_BlendMode blendMode)
 
 void ZTexture::Render(int x, int y, SDL_Rect * clip)
 {
-  // set the rendering space and render to the screen
   SDL_Rect renderQuad = { x, y, mWidth, mHeight };
-  // set the clip rendering dimensions
+
   if (clip != nullptr)
   {
     renderQuad.w = clip->w;
@@ -98,8 +98,9 @@ void ZTexture::Render(int x, int y, SDL_Rect * clip)
   renderQuad.w = int(renderQuad.w * mScaleX);
   renderQuad.h = int(renderQuad.h * mScaleY);
 
-  // render to the window
-  SDL_RenderCopy(mRenderer, mTexture, clip, &renderQuad);
+  SDL_RendererFlip flip = (SDL_RendererFlip)(int(mFlipX) | (int(mFlipY) * 2));
+  // render but even cooler
+  SDL_RenderCopyEx(mRenderer, mTexture, clip, &renderQuad, mAngle, &mCenter, flip);
 }
 
 void ZTexture::SetRenderer(SDL_Renderer * renderer)
@@ -142,4 +143,4 @@ void ZTexture::SetScale(float x, float y)
   mScaleX = x; mScaleY = y;
 }
 
-}
+} // namespace ZII2

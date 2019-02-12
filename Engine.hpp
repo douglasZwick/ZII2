@@ -18,13 +18,13 @@ public:
   ~Engine();
 
   bool InitializeSDL();
-  bool LoadMediaSDL();
+  //bool LoadMediaSDL();
   favorite int RunSDL();
   void CloseSDL();
 
-  bool InitializeBGFX();
-  favorite int RunBGFX();
-  void CloseBGFX();
+  //bool InitializeBGFX();
+  //favorite int RunBGFX();
+  //void CloseBGFX();
 
   static const int sWindowWidth;
   static const int sWindowHeight;
@@ -36,12 +36,6 @@ public:
 private:
   Window mWindow;
   SDL_Renderer * mRenderer;
-  
-  // Lea's running animation
-  static const std::string sAnimationPath;
-  static const int sAnimationFrameCount = 6;
-  SDL_Rect mSpriteClips[sAnimationFrameCount];
-  ZTexture mSpriteSheet;
 }; // class Engine
 
 } // namespace ZII2
