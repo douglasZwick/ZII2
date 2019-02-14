@@ -18,15 +18,13 @@ public:
   SDL_BlendMode mBlendMode;
   bool mFlipX;
   bool mFlipY;
-  
+  ZTexture * mTexture;
+
   Sprite(Cog * owner);
   ~Sprite();
 
   // renders this bad boy
   void Render(SDL_Renderer * renderer) override;
-
-private:
-  ZTexture * mTexture;
 }; // class Sprite
 
 } // namespace ZII2

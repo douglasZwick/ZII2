@@ -1,7 +1,6 @@
 #ifndef COG_H
 #define COG_H
 
-#include "Component.hpp"
 #include "Transform.hpp"
 #include "Sprite.hpp"
 

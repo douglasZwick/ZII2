@@ -5,6 +5,7 @@
 //#include <bgfx/bgfx.h>
 //#include <bgfx/platform.h>
 #include "Engine.hpp"
+#include "Cog.hpp"
 
 namespace ZII2
 {
@@ -15,6 +16,8 @@ const Uint8 Engine::sClearR = 0x20;
 const Uint8 Engine::sClearG = 0x28;
 const Uint8 Engine::sClearB = 0x2A;
 const Uint8 Engine::sClearA = 0xFF;
+
+ZTexture * Engine::sLeaSmug;
 
 //const std::string Engine::sAnimationPath = "lea_run.png";
 
@@ -75,7 +78,7 @@ bool Engine::LoadResources()
 {
   try
   {
-    sLeaSmug = new ZTexture("leaSmug.png", mRenderer);
+    sLeaSmug = new ZTexture("lea_smug.png", mRenderer);
   }
   catch (const std::exception&)
   {
@@ -94,6 +97,23 @@ int Engine::RunSDL()
 
   // main loop flag
   bool quit = false;
+
+  for (int i = 0; i < 360; ++i)
+  {
+    Cog cog;
+    cog.mTransform = new Transform(&cog);
+    cog.mSprite = new Sprite(&cog);
+    cog.mSprite->mTexture = sLeaSmug;
+    cog.mTransform->mPosX = 100 + i;
+    cog.mTransform->mPosY = 340;
+    cog.mTransform->mAngle = i;
+    cog.mTransform->mScaleX = 1.0f + i * 0.01f;
+    cog.mTransform->mScaleY = 1.0f + i * 0.01f;
+
+    mGraphics.Add(cog.mSprite);
+  }
+
+  double dt = 1.0 / 60.0;
 
   // event handler
   SDL_Event e;
@@ -124,6 +144,8 @@ int Engine::RunSDL()
     // clear the screen
     SDL_SetRenderDrawColor(mRenderer, sClearR, sClearG, sClearB, sClearA);
     SDL_RenderClear(mRenderer);
+
+    mGraphics.Update(dt);
 
     // update the window
     SDL_RenderPresent(mRenderer);

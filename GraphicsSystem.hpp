@@ -3,10 +3,13 @@
 
 #include <vector>
 #include "System.hpp"
-#include "Graphical.hpp"
+
+struct SDL_Renderer;
 
 namespace ZII2
 {
+
+class Graphical;
 
 class GraphicsSystem : public System
 {
@@ -16,6 +19,7 @@ public:
   GraphicsSystem(Engine * engine);
   ~GraphicsSystem();
 
+  void Add(Graphical * graphical);
   void Update(double dt) override;
 
 private:

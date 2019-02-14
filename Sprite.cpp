@@ -1,23 +1,26 @@
 #include "Sprite.hpp"
+#include "Transform.hpp"
 
 namespace ZII2
 {
 
 Sprite::Sprite(Cog * owner)
-  : Graphical(owner)
+  : Graphical(owner), mR(0xFF), mG(0xFF), mB(0xFF), mA(0xFF),
+    mBlendMode(SDL_BLENDMODE_BLEND), mFlipX(false), mFlipY(false),
+    mTexture(nullptr)
 {}
 
 Sprite::~Sprite() {}
 
 void Sprite::Render(SDL_Renderer * renderer)
 {
-  int x = 300;
-  int y = 300;
+  int x = mTransform->mPosX;
+  int y = mTransform->mPosY;
   int w = mTexture->GetWidth();
   int h = mTexture->GetHeight();
-  float scaleX = 1.0f;
-  float scaleY = 1.0f;
-  double angle = 0.0;
+  double angle = mTransform->mAngle;
+  float scaleX = mTransform->mScaleX;
+  float scaleY = mTransform->mScaleY;
   SDL_Rect * clip = nullptr;
   SDL_Point * center = nullptr;
   SDL_Rect renderQuad = { x, y, w, h };

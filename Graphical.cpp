@@ -1,4 +1,7 @@
+#include <SDL.h>
+#include "Cog.hpp"
 #include "Graphical.hpp"
+#include "Transform.hpp"
 
 namespace ZII2
 {

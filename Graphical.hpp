@@ -3,8 +3,12 @@
 
 #include "Component.hpp"
 
+struct SDL_Renderer;
+
 namespace ZII2
 {
+
+class Transform;
 
 class Graphical : public Component
 {

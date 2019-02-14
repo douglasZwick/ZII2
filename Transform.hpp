@@ -9,7 +9,11 @@ namespace ZII2
 class Transform : public Component
 {
 public:
-  
+  int mPosX;
+  int mPosY;
+  double mAngle;
+  float mScaleX;
+  float mScaleY;
   
   Transform(Cog * owner);
   ~Transform();

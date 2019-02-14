@@ -1,4 +1,7 @@
 #include "GraphicsSystem.hpp"
+#include "Engine.hpp"
+#include "Graphical.hpp"
+#include <SDL.h>
 
 namespace ZII2
 {
@@ -10,6 +13,11 @@ GraphicsSystem::GraphicsSystem(Engine * engine)
 }
 
 GraphicsSystem::~GraphicsSystem() {}
+
+void GraphicsSystem::Add(Graphical * graphical)
+{
+  mGraphicals.push_back(graphical);
+}
 
 void GraphicsSystem::Update(double dt)
 {

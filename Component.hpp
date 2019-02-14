@@ -1,10 +1,10 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include "Cog.hpp"
-
 namespace ZII2
 {
+
+class Cog;
 
 class Component
 {
