@@ -19,12 +19,11 @@ const Uint8 Engine::sClearA = 0xFF;
 //const std::string Engine::sAnimationPath = "lea_run.png";
 
 Engine::Engine()
-{
-}
+  : mGraphics(this)
+{}
 
 Engine::~Engine()
-{
-}
+{}
 
 bool Engine::InitializeSDL()
 {
@@ -72,61 +71,26 @@ bool Engine::InitializeSDL()
   return true;
 }
 
-//bool Engine::LoadMediaSDL()
-//{
-//  mSpriteSheet.SetRenderer(mRenderer);
-//
-//  if (!mSpriteSheet.LoadFromFile(sAnimationPath))
-//  {
-//    std::cout << "Sacre bleu, failed to load the running animation from " << sAnimationPath.c_str() << std::endl;
-//    return false;
-//  }
-//
-//  mSpriteSheet.SetScale(4, 4);
-//
-//  mSpriteClips[0].x =   0;
-//  mSpriteClips[0].y =   0;
-//  mSpriteClips[0].w =  32;
-//  mSpriteClips[0].h =  32;
-//
-//  mSpriteClips[1].x =  32;
-//  mSpriteClips[1].y =   0;
-//  mSpriteClips[1].w =  32;
-//  mSpriteClips[1].h =  32;
-//
-//  mSpriteClips[2].x =  64;
-//  mSpriteClips[2].y =   0;
-//  mSpriteClips[2].w =  32;
-//  mSpriteClips[2].h =  32;
-//
-//  mSpriteClips[3].x =  96;
-//  mSpriteClips[3].y =   0;
-//  mSpriteClips[3].w =  32;
-//  mSpriteClips[3].h =  32;
-//  
-//  mSpriteClips[4].x = 128;
-//  mSpriteClips[4].y =   0;
-//  mSpriteClips[4].w =  32;
-//  mSpriteClips[4].h =  32;
-//
-//  mSpriteClips[5].x = 160;
-//  mSpriteClips[5].y =   0;
-//  mSpriteClips[5].w =  32;
-//  mSpriteClips[5].h =  32;
-//
-//  return true;
-//}
+bool Engine::LoadResources()
+{
+  try
+  {
+    sLeaSmug = new ZTexture("leaSmug.png", mRenderer);
+  }
+  catch (const std::exception&)
+  {
+    return false;
+  }
+
+  return true;
+}
 
 int Engine::RunSDL()
 {
   // start up SDL and create a window
   if (!InitializeSDL()) return -1;
   // load the media
-  //if (!LoadMediaSDL()) return -1;
-
-  ZTexture leaSmug = ZTexture(mRenderer);
-  leaSmug.LoadFromFile("lea_smug.png");
-  leaSmug.SetScale(4.0f, 4.0f);
+  if (!LoadResources()) return -1;
 
   // main loop flag
   bool quit = false;
@@ -161,10 +125,6 @@ int Engine::RunSDL()
     SDL_SetRenderDrawColor(mRenderer, sClearR, sClearG, sClearB, sClearA);
     SDL_RenderClear(mRenderer);
 
-    int x = (sWindowWidth - int(float(leaSmug.GetWidth()) * leaSmug.GetScaleX())) / 2;
-    int y = (sWindowHeight - int(float(leaSmug.GetHeight()) * leaSmug.GetScaleY())) / 2;
-    leaSmug.Render(x, y);
-
     // update the window
     SDL_RenderPresent(mRenderer);
   }
@@ -178,7 +138,8 @@ int Engine::RunSDL()
 void Engine::CloseSDL()
 {
   // free the loaded images
-  //mSpriteSheet.Free();
+  delete sLeaSmug;
+  sLeaSmug = nullptr;
   // destroy the window etc
   SDL_DestroyRenderer(mRenderer);
   mRenderer = nullptr;
@@ -187,6 +148,16 @@ void Engine::CloseSDL()
   // quit the SDL subsystems
   IMG_Quit();
   SDL_Quit();
+}
+
+SDL_Window * Engine::GetWindow() const
+{
+  return mWindow;
+}
+
+SDL_Renderer * Engine::GetRenderer() const
+{
+  return mRenderer;
 }
 
 //bool Engine::InitializeBGFX()

@@ -44,6 +44,8 @@ add_library(
   Component.hpp
   Transform.cpp
   Transform.hpp
+  Graphical.cpp
+  Graphical.hpp
   Sprite.cpp
   Sprite.hpp
   Color.cpp

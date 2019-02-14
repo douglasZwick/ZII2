@@ -1,15 +1,17 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
+#include "Cog.hpp"
+
 namespace ZII2
 {
 
 class Component
 {
 public:
+  Cog * mOwner;
   
-  
-  Component();
+  Component(Cog * owner);
   ~Component();
 }; // class Component
 

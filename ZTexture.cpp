@@ -1,23 +1,25 @@
 #include <iostream>
 #include <string>
+#include <exception>
 #include <SDL_image.h>
 #include "ZTexture.hpp"
 
 namespace ZII2
 {
 
-ZTexture::ZTexture(SDL_Renderer * renderer)
-  : mTexture(nullptr), mRenderer(renderer),
-  mWidth(0), mHeight(0), mScaleX(1.0f), mScaleY(1.0f),
-  mAngle(0.0), mFlipX(false), mFlipY(false), mCenter(SDL_Point())
-{}
+ZTexture::ZTexture(std::string const & path, SDL_Renderer * renderer)
+  : mSdlTexture(nullptr), mWidth(0), mHeight(0)
+{
+  if (!LoadFromFile(path, renderer))
+    throw new std::exception;
+}
 
 ZTexture::~ZTexture()
 {
   Free();
 }
 
-bool ZTexture::LoadFromFile(std::string const & path)
+bool ZTexture::LoadFromFile(std::string const & path, SDL_Renderer * renderer)
 {
   // if anything is already there, detch et
   Free();
@@ -30,19 +32,17 @@ bool ZTexture::LoadFromFile(std::string const & path)
 
   if (loadedSurface == nullptr)
   {
-    std::cout << "Unable to load image " << path.c_str() << ". SDL_Image Error: " << IMG_GetError() << std::endl;
+    std::cout << "Unable to load image " << path << ". SDL_Image Error: " << IMG_GetError() << std::endl;
 
     return false;
   }
 
-  // color key the image
-  SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0xFF, 0x00, 0xFF));
   // create the texture from the pixels of the surface
-  newTexture = SDL_CreateTextureFromSurface(mRenderer, loadedSurface);
+  newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 
   if (newTexture == nullptr)
   {
-    std::cout << "Unable to create texture from " << path.c_str() << ". SDL Error: " << SDL_GetError() << std::endl;
+    std::cout << "Unable to create texture from " << path << ". SDL Error: " << SDL_GetError() << std::endl;
 
     return false;
   }
@@ -53,7 +53,7 @@ bool ZTexture::LoadFromFile(std::string const & path)
   // detch the old loaded surface
   SDL_FreeSurface(loadedSurface);
   // set the new texture and return
-  mTexture = newTexture;
+  mSdlTexture = newTexture;
 
   return true;
 }
@@ -61,10 +61,10 @@ bool ZTexture::LoadFromFile(std::string const & path)
 void ZTexture::Free()
 {
   // frees the texture if it exists
-  if (mTexture != nullptr)
+  if (mSdlTexture != nullptr)
   {
-    SDL_DestroyTexture(mTexture);
-    mTexture = nullptr;
+    SDL_DestroyTexture(mSdlTexture);
+    mSdlTexture = nullptr;
     mWidth = 0;
     mHeight = 0;
   }
@@ -72,75 +72,27 @@ void ZTexture::Free()
 
 void ZTexture::SetColor(Uint8 r, Uint8 g, Uint8 b)
 {
-  SDL_SetTextureColorMod(mTexture, r, g, b);
+  SDL_SetTextureColorMod(mSdlTexture, r, g, b);
 }
 
 void ZTexture::SetAlpha(Uint8 a)
 {
-  SDL_SetTextureAlphaMod(mTexture, a);
+  SDL_SetTextureAlphaMod(mSdlTexture, a);
 }
 
 void ZTexture::SetBlendMode(SDL_BlendMode blendMode)
 {
-  SDL_SetTextureBlendMode(mTexture, blendMode);
+  SDL_SetTextureBlendMode(mSdlTexture, blendMode);
 }
 
-void ZTexture::Render(int x, int y, SDL_Rect * clip)
-{
-  SDL_Rect renderQuad = { x, y, mWidth, mHeight };
-
-  if (clip != nullptr)
-  {
-    renderQuad.w = clip->w;
-    renderQuad.h = clip->h;
-  }
-
-  renderQuad.w = int(renderQuad.w * mScaleX);
-  renderQuad.h = int(renderQuad.h * mScaleY);
-
-  SDL_RendererFlip flip = (SDL_RendererFlip)(int(mFlipX) | (int(mFlipY) * 2));
-  // render but even cooler
-  SDL_RenderCopyEx(mRenderer, mTexture, clip, &renderQuad, mAngle, &mCenter, flip);
-}
-
-void ZTexture::SetRenderer(SDL_Renderer * renderer)
-{
-  mRenderer = renderer;
-}
-
-int ZTexture::GetWidth()
+int ZTexture::GetWidth() const
 {
   return mWidth;
 }
 
-int ZTexture::GetHeight()
+int ZTexture::GetHeight() const
 {
   return mHeight;
-}
-
-float ZTexture::GetScaleX()
-{
-  return mScaleX;
-}
-
-void ZTexture::SetScaleX(float x)
-{
-  mScaleX = x;
-}
-
-float ZTexture::GetScaleY()
-{
-  return mScaleY;
-}
-
-void ZTexture::SetScaleY(float y)
-{
-  mScaleY = y;
-}
-
-void ZTexture::SetScale(float x, float y)
-{
-  mScaleX = x; mScaleY = y;
 }
 
 } // namespace ZII2

@@ -4,12 +4,11 @@
 #include <string>
 #include <SDL.h>
 #include "Defines.hpp"
+#include "GraphicsSystem.hpp"
 #include "ZTexture.hpp"
 
 namespace ZII2
 {
-
-typedef SDL_Window * Window;
 
 class Engine
 {
@@ -18,9 +17,11 @@ public:
   ~Engine();
 
   bool InitializeSDL();
-  //bool LoadMediaSDL();
-  favorite int RunSDL();
+  bool LoadResources();
+  int RunSDL();
   void CloseSDL();
+  SDL_Window * GetWindow() const;
+  SDL_Renderer * GetRenderer() const;
 
   //bool InitializeBGFX();
   //favorite int RunBGFX();
@@ -33,8 +34,11 @@ public:
   static const Uint8 sClearB;
   static const Uint8 sClearA;
 
+  static ZTexture * sLeaSmug;
+
 private:
-  Window mWindow;
+  GraphicsSystem mGraphics;
+  SDL_Window * mWindow;
   SDL_Renderer * mRenderer;
 }; // class Engine
 

@@ -2,22 +2,31 @@
 #define SPRITE_H
 
 #include <SDL.h>
-#include "Component.hpp"
+#include "Graphical.hpp"
+#include "ZTexture.hpp"
 
 namespace ZII2
 {
 
-class Sprite : public Component
+class Sprite : public Graphical
 {
 public:
+  Uint8 mR;
+  Uint8 mG;
+  Uint8 mB;
+  Uint8 mA;
+  SDL_BlendMode mBlendMode;
   bool mFlipX;
   bool mFlipY;
   
-  Sprite();
+  Sprite(Cog * owner);
   ~Sprite();
 
+  // renders this bad boy
+  void Render(SDL_Renderer * renderer) override;
+
 private:
-  SDL_Texture * mTexture;
+  ZTexture * mTexture;
 }; // class Sprite
 
 } // namespace ZII2

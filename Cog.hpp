@@ -11,17 +11,11 @@ namespace ZII2
 class Cog
 {
 public:
-
+  Transform * mTransform;
+  Sprite *    mSprite;
 
   Cog();
   ~Cog();
-
-  Transform * GetTransform();
-  Sprite *    GetSprite();
-
-private:
-  Transform * mTransform;
-  Sprite *    mSprite;
 }; // class Cog
 
 } // namespace ZII2

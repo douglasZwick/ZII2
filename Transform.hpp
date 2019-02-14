@@ -11,7 +11,7 @@ class Transform : public Component
 public:
   
   
-  Transform();
+  Transform(Cog * owner);
   ~Transform();
 }; // class Transform
 

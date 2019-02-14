@@ -3,7 +3,9 @@
 namespace ZII2
 {
 
-Transform::Transform() {}
+Transform::Transform(Cog * owner)
+  : Component(owner)
+{}
 
 Transform::~Transform() {}
 

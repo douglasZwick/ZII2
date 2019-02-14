@@ -3,7 +3,9 @@
 namespace ZII2
 {
 
-Component::Component() {}
+Component::Component(Cog * owner)
+  : mOwner(owner)
+{}
 
 Component::~Component() {}
 
