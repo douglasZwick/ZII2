@@ -2,10 +2,10 @@
 #define ENGINE_H
 
 #include <string>
-#include <SDL.h>
+#include <cstdint>
 #include "Defines.hpp"
+#include "ForwardDeclarations.hpp"
 #include "GraphicsSystem.hpp"
-#include "ZTexture.hpp"
 
 namespace ZII2
 {
@@ -17,11 +17,8 @@ public:
   ~Engine();
 
   bool InitializeSDL();
-  bool LoadResources();
   int RunSDL();
   void CloseSDL();
-  SDL_Window * GetWindow() const;
-  SDL_Renderer * GetRenderer() const;
 
   //bool InitializeBGFX();
   //favorite int RunBGFX();
@@ -29,17 +26,18 @@ public:
 
   static const int sWindowWidth;
   static const int sWindowHeight;
-  static const Uint8 sClearR;
-  static const Uint8 sClearG;
-  static const Uint8 sClearB;
-  static const Uint8 sClearA;
 
   static ZTexture * sLeaSmug;
 
-private:
   GraphicsSystem mGraphics;
-  SDL_Window * mWindow;
-  SDL_Renderer * mRenderer;
+
+private:
+  struct Impl;
+
+  Impl * mImpl;
+
+  Window * GetWindow() const;
+  void Update(double dt);
 }; // class Engine
 
 } // namespace ZII2

@@ -1,6 +1,7 @@
 #ifndef TRANFORM_H
 #define TRANFORM_H
 
+#include "ForwardDeclarations.hpp"
 #include "Component.hpp"
 
 namespace ZII2

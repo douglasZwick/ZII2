@@ -1,18 +1,20 @@
 #include "Sprite.hpp"
 #include "Transform.hpp"
+#include "ZTexture.hpp"
+#include "Renderer.hpp"
 
 namespace ZII2
 {
 
 Sprite::Sprite(Cog * owner)
   : Graphical(owner), mR(0xFF), mG(0xFF), mB(0xFF), mA(0xFF),
-    mBlendMode(SDL_BLENDMODE_BLEND), mFlipX(false), mFlipY(false),
+    mBlendMode(ZBlendMode::Blend), mFlipX(false), mFlipY(false),
     mTexture(nullptr)
 {}
 
 Sprite::~Sprite() {}
 
-void Sprite::Render(SDL_Renderer * renderer)
+void Sprite::Render(Renderer * renderer)
 {
   int x = mTransform->mPosX;
   int y = mTransform->mPosY;
@@ -21,26 +23,26 @@ void Sprite::Render(SDL_Renderer * renderer)
   double angle = mTransform->mAngle;
   float scaleX = mTransform->mScaleX;
   float scaleY = mTransform->mScaleY;
-  SDL_Rect * clip = nullptr;
-  SDL_Point * center = nullptr;
-  SDL_Rect renderQuad = { x, y, w, h };
+  ZRect * srcrect = nullptr;
+  ZPoint * center = nullptr;
+  ZRect dstrect = { x, y, w, h };
 
-  if (clip != nullptr)
+  if (srcrect != nullptr)
   {
-    renderQuad.w = clip->w;
-    renderQuad.h = clip->h;
+    dstrect.w = srcrect->w;
+    dstrect.h = srcrect->h;
   }
 
-  renderQuad.w = int(renderQuad.w * scaleX);
-  renderQuad.h = int(renderQuad.h * scaleY);
+  dstrect.w = int(dstrect.w * scaleX);
+  dstrect.h = int(dstrect.h * scaleY);
 
-  SDL_RendererFlip flip = (SDL_RendererFlip)(int(mFlipX) | (int(mFlipY) * 2));
+  ZFlip flip = static_cast<ZFlip>(int(mFlipX) | (int(mFlipY) * 2));
 
   mTexture->SetColor(mR, mG, mB);
   mTexture->SetAlpha(mA);
   mTexture->SetBlendMode(mBlendMode);
 
-  SDL_RenderCopyEx(renderer, mTexture->mSdlTexture, clip, &renderQuad, angle, center, flip);
+  renderer->Render(mTexture, srcrect, &dstrect, angle, center, flip);
 }
 
 } // namespace ZII2

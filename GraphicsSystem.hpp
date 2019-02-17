@@ -2,28 +2,38 @@
 #define GRAPHICSSYSTEM_H
 
 #include <vector>
+#include <cstdint>
+#include "ForwardDeclarations.hpp"
 #include "System.hpp"
-
-struct SDL_Renderer;
 
 namespace ZII2
 {
 
-class Graphical;
-
 class GraphicsSystem : public System
 {
 public:
-  SDL_Renderer * mRenderer;
-  
+  uint8_t mClearR;
+  uint8_t mClearG;
+  uint8_t mClearB;
+  uint8_t mClearA;
+
   GraphicsSystem(Engine * engine);
   ~GraphicsSystem();
 
+  bool Initialize(Window * window);
   void Add(Graphical * graphical);
   void Update(double dt) override;
+  bool LoadImages() const;
+  void UnloadImages() const;
+  void ShutDown();
 
 private:
+  struct Impl;
+
+  Impl * mImpl;
   std::vector<Graphical *> mGraphicals;
+
+  Renderer * GetRenderer() const;
 }; // class GraphicsSystem
 
 } // namespace ZII2

@@ -22,7 +22,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
-find_package(bgfx REQUIRED)
+# find_package(bgfx REQUIRED)
 find_package(googletest)
 
 ################################################################################
@@ -32,6 +32,12 @@ find_package(googletest)
 add_library(
   ZII2_Engine
   Defines.hpp
+  ForwardDeclarations.hpp
+  Types.hpp
+  Window.cpp
+  Window.hpp
+  Renderer.cpp
+  Renderer.hpp
   Engine.cpp
   Engine.hpp
   System.cpp
@@ -52,10 +58,17 @@ add_library(
   Color.hpp
   Pixit.cpp
   Pixit.hpp
-  ZMath.cpp
-  ZMath.hpp
   ZTexture.cpp
   ZTexture.hpp
+  Surface.cpp
+  Surface.hpp
+  Assertions.cpp
+)
+
+add_library(
+  ZII2_Math
+  ZMath.cpp
+  ZMath.hpp
 )
 
 add_executable(
@@ -63,6 +76,7 @@ add_executable(
   main.cpp
 )
 
+target_link_libraries(ZII2_Engine ZII2_Math)
 target_link_libraries(Practice ZII2_Engine)
 
 option(ZII2_BUILD_TESTS
@@ -100,12 +114,12 @@ endif()
 
 target_include_directories(
   ZII2_Engine
-  PUBLIC
+  PRIVATE
     ${SDL2_INCLUDE_DIR}
     ${SDL2_IMAGE_INCLUDE_DIR}
-    ${BGFX_INCLUDE_DIR}
-    ${BIMG_INCLUDE_DIR}
-    ${BX_INCLUDE_DIRS}
+    # ${BGFX_INCLUDE_DIR}
+    # ${BIMG_INCLUDE_DIR}
+    # ${BX_INCLUDE_DIRS}
 )
 
 target_link_libraries(
@@ -114,18 +128,18 @@ target_link_libraries(
     ${SDL2_IMAGE_LIBRARY}
 )
 
-target_link_libraries(
-  ZII2_Engine
-  debug
-    ${BGFX_LIBRARY_DEBUG}
-    ${BIMG_LIBRARY_DEBUG}
-    ${BX_LIBRARY_DEBUG}
-)
+# target_link_libraries(
+#   ZII2_Engine
+#   debug
+#     ${BGFX_LIBRARY_DEBUG}
+#     ${BIMG_LIBRARY_DEBUG}
+#     ${BX_LIBRARY_DEBUG}
+# )
 
-target_link_libraries(
-  ZII2_Engine
-  optimized
-    ${BGFX_LIBRARY_RELEASE}
-    ${BIMG_LIBRARY_RELEASE}
-    ${BX_LIBRARY_RELEASE}
-)
+# target_link_libraries(
+#   ZII2_Engine
+#   optimized
+#     ${BGFX_LIBRARY_RELEASE}
+#     ${BIMG_LIBRARY_RELEASE}
+#     ${BX_LIBRARY_RELEASE}
+# )

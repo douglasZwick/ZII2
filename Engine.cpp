@@ -6,27 +6,36 @@
 //#include <bgfx/platform.h>
 #include "Engine.hpp"
 #include "Cog.hpp"
+#include "Window.hpp"
+#include "Renderer.hpp"
+#include "GraphicsSystem.hpp"
+#include "Transform.hpp"
+#include "Sprite.hpp"
 
 namespace ZII2
 {
 
+struct Engine::Impl
+{
+  Window * Window = nullptr;
+};
+
 const int Engine::sWindowWidth = 1280;
 const int Engine::sWindowHeight = 720;
-const Uint8 Engine::sClearR = 0x20;
-const Uint8 Engine::sClearG = 0x28;
-const Uint8 Engine::sClearB = 0x2A;
-const Uint8 Engine::sClearA = 0xFF;
 
 ZTexture * Engine::sLeaSmug;
 
 //const std::string Engine::sAnimationPath = "lea_run.png";
 
 Engine::Engine()
-  : mGraphics(this)
+  : mGraphics(this), mImpl(new Impl)
 {}
 
 Engine::~Engine()
-{}
+{
+  delete mImpl->Window;
+  delete mImpl;
+}
 
 bool Engine::InitializeSDL()
 {
@@ -42,26 +51,15 @@ bool Engine::InitializeSDL()
     std::cout << "Warning: Linear texture filtering was unable to be set" << std::endl;
 
   // create the window
-  mWindow = SDL_CreateWindow("ZII2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+  mImpl->Window = new Window("ZII2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
     sWindowWidth, sWindowHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
-  if (mWindow == nullptr)
+  if (mImpl->Window->Failed())
   {
     std::cout << "Window could not be created. SDL Error: " << SDL_GetError() << std::endl;
     return false;
   }
 
-  // create the vsync-enabled renderer for the window
-  mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-
-  if (mRenderer == nullptr)
-  {
-    std::cout << "SDL_Renderer could not be created. SDL Error: " << SDL_GetError() << std::endl;
-    return false;
-  }
-
-  // initialize the renderer color
-  SDL_SetRenderDrawColor(mRenderer, sClearR, sClearG, sClearB, sClearA);
   // initialize PNG loading
   int imgFlags = IMG_INIT_PNG;
 
@@ -71,19 +69,8 @@ bool Engine::InitializeSDL()
     return false;
   }
 
-  return true;
-}
-
-bool Engine::LoadResources()
-{
-  try
-  {
-    sLeaSmug = new ZTexture("lea_smug.png", mRenderer);
-  }
-  catch (const std::exception&)
-  {
+  if (!mGraphics.Initialize(mImpl->Window))
     return false;
-  }
 
   return true;
 }
@@ -92,8 +79,6 @@ int Engine::RunSDL()
 {
   // start up SDL and create a window
   if (!InitializeSDL()) return -1;
-  // load the media
-  if (!LoadResources()) return -1;
 
   // main loop flag
   bool quit = false;
@@ -141,14 +126,7 @@ int Engine::RunSDL()
       }
     }
 
-    // clear the screen
-    SDL_SetRenderDrawColor(mRenderer, sClearR, sClearG, sClearB, sClearA);
-    SDL_RenderClear(mRenderer);
-
-    mGraphics.Update(dt);
-
-    // update the window
-    SDL_RenderPresent(mRenderer);
+    Update(dt);
   }
 
   // free everything and close up shop
@@ -159,27 +137,22 @@ int Engine::RunSDL()
 
 void Engine::CloseSDL()
 {
-  // free the loaded images
-  delete sLeaSmug;
-  sLeaSmug = nullptr;
-  // destroy the window etc
-  SDL_DestroyRenderer(mRenderer);
-  mRenderer = nullptr;
-  SDL_DestroyWindow(mWindow);
-  mWindow = nullptr;
+  mGraphics.ShutDown();
+  delete mImpl->Window;
+  mImpl->Window = nullptr;
   // quit the SDL subsystems
   IMG_Quit();
   SDL_Quit();
 }
 
-SDL_Window * Engine::GetWindow() const
+Window * Engine::GetWindow() const
 {
-  return mWindow;
+  return mImpl->Window;
 }
 
-SDL_Renderer * Engine::GetRenderer() const
+void Engine::Update(double dt)
 {
-  return mRenderer;
+  mGraphics.Update(dt);
 }
 
 //bool Engine::InitializeBGFX()

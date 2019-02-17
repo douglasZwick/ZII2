@@ -1,8 +1,7 @@
 #ifndef COG_H
 #define COG_H
 
-#include "Transform.hpp"
-#include "Sprite.hpp"
+#include "ForwardDeclarations.hpp"
 
 namespace ZII2
 {

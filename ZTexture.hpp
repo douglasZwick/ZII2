@@ -2,7 +2,9 @@
 #define ZTEXTURE_H
 
 #include <string>
-#include <SDL.h>
+#include <cstdint>
+#include "Types.hpp"
+#include "ForwardDeclarations.hpp"
 
 namespace ZII2
 {
@@ -10,26 +12,29 @@ namespace ZII2
 class ZTexture
 {
 public:
-  // the actual hardware texture
-  SDL_Texture * mSdlTexture;
-
-  ZTexture(std::string const & path, SDL_Renderer * renderer);
+  ZTexture();
+  ZTexture(std::string const & path, Renderer * renderer);
+  ZTexture(Surface * surface, Renderer * renderer);
   ~ZTexture();
 
-  void SetColor(Uint8 r, Uint8 g, Uint8 b);
-  void SetAlpha(Uint8 a);
-  void SetBlendMode(SDL_BlendMode blendMode);
+  void SetColor(uint8_t r, uint8_t g, uint8_t b);
+  void SetAlpha(uint8_t a);
+  void SetBlendMode(ZBlendMode blendMode);
   // gets the dimensions
   int GetWidth() const;
   int GetHeight() const;
+  void * GetHandle() const;
+
+  bool Failed() const;
 
 private:
-  // dimensions
-  int mWidth;
-  int mHeight;
+  struct Impl;
+
+  Impl * mImpl;
 
   // loads image at specified path
-  bool LoadFromFile(std::string const & path, SDL_Renderer * renderer);
+  bool LoadFromFile(std::string const & path, Renderer * renderer);
+  bool LoadFromSurface(Surface * surface, Renderer * renderer);
   // deallocates the texture
   void Free();
 }; // class ZTexture

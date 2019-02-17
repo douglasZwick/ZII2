@@ -1,10 +1,10 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
+#include "ForwardDeclarations.hpp"
+
 namespace ZII2
 {
-
-class Engine;
 
 class System
 {
