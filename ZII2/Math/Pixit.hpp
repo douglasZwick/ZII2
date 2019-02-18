@@ -3,7 +3,6 @@
 
 #include <string>
 #include <ostream>
-#include "Defines.hpp"
 
 namespace ZII2
 {

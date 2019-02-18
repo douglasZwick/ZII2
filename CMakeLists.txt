@@ -25,55 +25,65 @@ find_package(SDL2_image REQUIRED)
 # find_package(bgfx REQUIRED)
 find_package(googletest)
 
+set(ZII2_INCLUDE_DIR ${CMAKE_SOURCE_DIR})
+
 ################################################################################
 # Build Practice Executable
 ################################################################################
 
+set(ZII_ENGINE_SOURCE
+  ZII2/Engine/Defines.hpp
+  ZII2/Engine/ForwardDeclarations.hpp
+  ZII2/Engine/Types.hpp
+  ZII2/Engine/Window.cpp
+  ZII2/Engine/Window.hpp
+  ZII2/Engine/Renderer.cpp
+  ZII2/Engine/Renderer.hpp
+  ZII2/Engine/Engine.cpp
+  ZII2/Engine/Engine.hpp
+  ZII2/Engine/System.cpp
+  ZII2/Engine/System.hpp
+  ZII2/Engine/GraphicsSystem.cpp
+  ZII2/Engine/GraphicsSystem.hpp
+  ZII2/Engine/Cog.cpp
+  ZII2/Engine/Cog.hpp
+  ZII2/Engine/Component.cpp
+  ZII2/Engine/Component.hpp
+  ZII2/Engine/Transform.cpp
+  ZII2/Engine/Transform.hpp
+  ZII2/Engine/Graphical.cpp
+  ZII2/Engine/Graphical.hpp
+  ZII2/Engine/Sprite.cpp
+  ZII2/Engine/Sprite.hpp
+  ZII2/Engine/Color.cpp
+  ZII2/Engine/Color.hpp
+  ZII2/Engine/ZTexture.cpp
+  ZII2/Engine/ZTexture.hpp
+  ZII2/Engine/Surface.cpp
+  ZII2/Engine/Surface.hpp
+  ZII2/Engine/Assertions.cpp
+)
+
+set(ZII_MATH_SOURCE
+  ZII2/Math/ZMath.cpp
+  ZII2/Math/ZMath.hpp
+  ZII2/Math/Pixit.cpp
+  ZII2/Math/Pixit.hpp
+)
+
 add_library(
   ZII2_Engine
-  Defines.hpp
-  ForwardDeclarations.hpp
-  Types.hpp
-  Window.cpp
-  Window.hpp
-  Renderer.cpp
-  Renderer.hpp
-  Engine.cpp
-  Engine.hpp
-  System.cpp
-  System.hpp
-  GraphicsSystem.cpp
-  GraphicsSystem.hpp
-  Cog.cpp
-  Cog.hpp
-  Component.cpp
-  Component.hpp
-  Transform.cpp
-  Transform.hpp
-  Graphical.cpp
-  Graphical.hpp
-  Sprite.cpp
-  Sprite.hpp
-  Color.cpp
-  Color.hpp
-  Pixit.cpp
-  Pixit.hpp
-  ZTexture.cpp
-  ZTexture.hpp
-  Surface.cpp
-  Surface.hpp
-  Assertions.cpp
+  ${ZII_ENGINE_SOURCE}
 )
 
 add_library(
   ZII2_Math
-  ZMath.cpp
-  ZMath.hpp
+  ${ZII_MATH_SOURCE}
 )
 
 add_executable(
   Practice
-  main.cpp
+  ZII2/Game/main.cpp
 )
 
 target_link_libraries(ZII2_Engine ZII2_Math)
@@ -87,8 +97,8 @@ option(ZII2_BUILD_TESTS
 if(ZII2_BUILD_TESTS)
   add_executable(
     ZII2_Tests
-    gtest_runner.cpp
-    ZII2_Tests_Main.cpp
+    ZII2/Test/gtest_runner.cpp
+    ZII2/Test/ZII2_Tests_Main.cpp
   )
   
   target_link_libraries(ZII2_Tests ZII2_Engine)
@@ -114,12 +124,20 @@ endif()
 
 target_include_directories(
   ZII2_Engine
+  PUBLIC
+    ${ZII2_INCLUDE_DIR}
   PRIVATE
     ${SDL2_INCLUDE_DIR}
     ${SDL2_IMAGE_INCLUDE_DIR}
     # ${BGFX_INCLUDE_DIR}
     # ${BIMG_INCLUDE_DIR}
     # ${BX_INCLUDE_DIRS}
+)
+
+target_include_directories(
+  ZII2_Math
+  PUBLIC
+    ${ZII2_INCLUDE_DIR}
 )
 
 target_link_libraries(
@@ -143,3 +161,13 @@ target_link_libraries(
 #     ${BIMG_LIBRARY_RELEASE}
 #     ${BX_LIBRARY_RELEASE}
 # )
+
+source_group(
+  TREE ${CMAKE_SOURCE_DIR}/ZII2
+  FILES ${ZII_ENGINE_SOURCE}
+)
+
+source_group(
+  TREE ${CMAKE_SOURCE_DIR}/ZII2
+  FILES ${ZII_MATH_SOURCE}
+)
