@@ -28,7 +28,7 @@ public:
   static const int sWindowWidth;
   static const int sWindowHeight;
 
-  static ZTexture * sLeaSmug;
+  static Texture * sLeaSmug;
 
   GraphicsSystem mGraphics;
 

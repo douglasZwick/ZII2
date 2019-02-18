@@ -1,6 +1,6 @@
 #include "Sprite.hpp"
 #include "Transform.hpp"
-#include "ZTexture.hpp"
+#include "Texture.hpp"
 #include "Renderer.hpp"
 
 namespace ZII2

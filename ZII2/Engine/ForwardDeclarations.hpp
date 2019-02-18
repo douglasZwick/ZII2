@@ -12,7 +12,7 @@ class Component;
 class Transform;
 class Graphical;
 class Sprite;
-class ZTexture;
+class Texture;
 class Surface;
 class Window;
 class Renderer;

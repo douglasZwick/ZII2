@@ -10,13 +10,13 @@
 namespace ZII2
 {
 
-class ZTexture
+class Texture
 {
 public:
-  ZTexture();
-  ZTexture(std::string const & path, Renderer * renderer);
-  ZTexture(Surface * surface, Renderer * renderer);
-  ~ZTexture();
+  Texture();
+  Texture(std::string const & path, Renderer * renderer);
+  Texture(Surface * surface, Renderer * renderer);
+  ~Texture();
 
   void SetColor(uint8_t r, uint8_t g, uint8_t b);
   void SetAlpha(uint8_t a);

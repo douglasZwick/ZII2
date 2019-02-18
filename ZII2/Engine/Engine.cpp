@@ -21,7 +21,7 @@ struct Engine::Impl
 const int Engine::sWindowWidth = 1280;
 const int Engine::sWindowHeight = 720;
 
-ZTexture * Engine::sLeaSmug;
+Texture * Engine::sLeaSmug;
 
 //const std::string Engine::sAnimationPath = "lea_run.png";
 

@@ -20,7 +20,7 @@ public:
   ZBlendMode mBlendMode;
   bool mFlipX;
   bool mFlipY;
-  ZTexture * mTexture;
+  Texture * mTexture;
 
   Sprite(Cog * owner);
   ~Sprite();

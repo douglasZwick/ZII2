@@ -6,7 +6,7 @@
 #include "Engine.hpp"
 #include "Graphical.hpp"
 #include "Renderer.hpp"
-#include "ZTexture.hpp"
+#include "Texture.hpp"
 
 namespace ZII2
 {
@@ -84,7 +84,7 @@ void GraphicsSystem::Update(double dt)
 bool GraphicsSystem::LoadImages() const
 {
   Renderer * renderer = GetRenderer();
-  ZTexture * leaSmug = new ZTexture("lea_smug.png", renderer);
+  Texture * leaSmug = new Texture("lea_smug.png", renderer);
 
   if (leaSmug->Failed())
     return false;

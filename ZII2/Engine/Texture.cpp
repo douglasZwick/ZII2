@@ -3,42 +3,42 @@
 
 #include <SDL_image.h>
 
-#include "ZTexture.hpp"
+#include "Texture.hpp"
 #include "Surface.hpp"
 #include "Renderer.hpp"
 
 namespace ZII2
 {
 
-struct ZTexture::Impl
+struct Texture::Impl
 {
   SDL_Texture * Texture = nullptr;
   int Width = -1;
   int Height = -1;
 };
 
-ZTexture::ZTexture()
+Texture::Texture()
   : mImpl(new Impl)
 {}
 
-ZTexture::ZTexture(std::string const & path, Renderer * renderer)
+Texture::Texture(std::string const & path, Renderer * renderer)
   : mImpl(new Impl)
 {
   LoadFromFile(path, renderer);
 }
 
-ZTexture::ZTexture(Surface * surface, Renderer * renderer)
+Texture::Texture(Surface * surface, Renderer * renderer)
   : mImpl(new Impl)
 {
   LoadFromSurface(surface, renderer);
 }
 
-ZTexture::~ZTexture()
+Texture::~Texture()
 {
   Free();
 }
 
-bool ZTexture::LoadFromFile(std::string const & path, Renderer * renderer)
+bool Texture::LoadFromFile(std::string const & path, Renderer * renderer)
 {
   // if anything is already there, detch et
   Free();
@@ -64,7 +64,7 @@ bool ZTexture::LoadFromFile(std::string const & path, Renderer * renderer)
   return true;
 }
 
-bool ZTexture::LoadFromSurface(Surface * surface, Renderer * renderer)
+bool Texture::LoadFromSurface(Surface * surface, Renderer * renderer)
 {
   SDL_Renderer * sdlRenderer = static_cast<SDL_Renderer *>(renderer->GetHandle());
   SDL_Surface * sdlSurface = static_cast<SDL_Surface *>(surface->GetHandle());
@@ -79,7 +79,7 @@ bool ZTexture::LoadFromSurface(Surface * surface, Renderer * renderer)
   return true;
 }
 
-void ZTexture::Free()
+void Texture::Free()
 {
   // frees the texture if it exists
   if (mImpl->Texture != nullptr)
@@ -91,7 +91,7 @@ void ZTexture::Free()
   }
 }
 
-void ZTexture::SetColor(uint8_t r, uint8_t g, uint8_t b)
+void Texture::SetColor(uint8_t r, uint8_t g, uint8_t b)
 {
   SDL_SetTextureColorMod(
     mImpl->Texture, 
@@ -100,36 +100,36 @@ void ZTexture::SetColor(uint8_t r, uint8_t g, uint8_t b)
     static_cast<Uint8>(b));
 }
 
-void ZTexture::SetAlpha(uint8_t a)
+void Texture::SetAlpha(uint8_t a)
 {
   SDL_SetTextureAlphaMod(
     mImpl->Texture,
     static_cast<Uint8>(a));
 }
 
-void ZTexture::SetBlendMode(ZBlendMode blendMode)
+void Texture::SetBlendMode(ZBlendMode blendMode)
 {
   SDL_SetTextureBlendMode(
     mImpl->Texture,
     static_cast<SDL_BlendMode>(blendMode));
 }
 
-int ZTexture::GetWidth() const
+int Texture::GetWidth() const
 {
   return mImpl->Width;
 }
 
-int ZTexture::GetHeight() const
+int Texture::GetHeight() const
 {
   return mImpl->Height;
 }
 
-void * ZTexture::GetHandle() const
+void * Texture::GetHandle() const
 {
   return static_cast<void *>(mImpl->Texture);
 }
 
-bool ZTexture::Failed() const
+bool Texture::Failed() const
 {
   return mImpl->Texture == nullptr;
 }

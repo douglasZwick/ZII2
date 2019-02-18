@@ -2,7 +2,7 @@
 
 #include "Renderer.hpp"
 #include "Window.hpp"
-#include "ZTexture.hpp"
+#include "Texture.hpp"
 
 namespace ZII2
 {
@@ -44,7 +44,7 @@ void Renderer::Clear()
   SDL_RenderClear(mImpl->Renderer);
 }
 
-void Renderer::Render(ZTexture * texture,
+void Renderer::Render(Texture * texture,
   ZRect const * srcrect, ZRect * const dstrect,
   double angle, ZPoint const * center, ZFlip flip)
 {
