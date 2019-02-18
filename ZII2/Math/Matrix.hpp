@@ -11,6 +11,8 @@ public:
   // Access order is [x][y]
   T mData[3][3];
 
+  static Matrix3x3<T> Multiply(Matrix3x3<T> const & a, Matrix3x3<T> const & a);
+
   Matrix3x3();
   Matrix3x3(
     T t00, T t10, T t20,
@@ -24,6 +26,18 @@ public:
   void operator-=(Matrix3x3<T> const & rhs);
   Matrix3x3<T> operator+(Matrix3x3<T> const & rhs) const;
   Matrix3x3<T> operator-(Matrix3x3<T> const & rhs) const;
+  void operator*=(float rhs);
+  void operator*=(T rhs);
+  void operator/=(float rhs);
+  void operator/=(T rhs);
+  Matrix3x3<T> operator*(float rhs) const;
+  Matrix3x3<T> operator/(float rhs) const;
+  Matrix3x3<T> operator*(T rhs) const;
+  Matrix3x3<T> operator/(T rhs) const;
+  bool operator==(Matrix3x3<T> const & rhs) const;
+  bool operator!=(Matrix3x3<T> const & rhs) const;
+
+  friend Matrix3x3<T> operator*(Matrix3x3<T> const & a, Matrix3x3<T> const & b);
 };
 
 } // namespace ZII2
