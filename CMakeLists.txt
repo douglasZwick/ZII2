@@ -48,8 +48,8 @@ set(ZII_ENGINE_SOURCE
   ZII2/Engine/Graphical.hpp
   ZII2/Engine/Sprite.cpp
   ZII2/Engine/Sprite.hpp
-  ZII2/Engine/ZTexture.cpp
-  ZII2/Engine/ZTexture.hpp
+  ZII2/Engine/Texture.cpp
+  ZII2/Engine/Texture.hpp
   ZII2/Engine/Surface.cpp
   ZII2/Engine/Surface.hpp
   ZII2/Engine/Window.cpp
@@ -65,10 +65,12 @@ set(ZII_ENGINE_SOURCE
 )
 
 set(ZII_MATH_SOURCE
-  ZII2/Math/ZMath.cpp
-  ZII2/Math/ZMath.hpp
+  ZII2/Math/Math.cpp
+  ZII2/Math/Math.hpp
   ZII2/Math/Pixit.cpp
   ZII2/Math/Pixit.hpp
+  ZII2/Math/Matrix.inl
+  ZII2/Math/Matrix.hpp
 )
 
 add_library(
