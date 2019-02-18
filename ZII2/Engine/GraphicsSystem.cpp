@@ -1,10 +1,12 @@
 #include <iostream>
+
+#include <SDL.h>
+
 #include "GraphicsSystem.hpp"
 #include "Engine.hpp"
 #include "Graphical.hpp"
 #include "Renderer.hpp"
 #include "ZTexture.hpp"
-#include <SDL.h>
 
 namespace ZII2
 {

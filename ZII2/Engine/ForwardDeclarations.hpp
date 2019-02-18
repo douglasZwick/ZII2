@@ -4,8 +4,6 @@
 namespace ZII2
 {
 
-class Window;
-class Renderer;
 class Engine;
 class System;
 class GraphicsSystem;
@@ -16,6 +14,9 @@ class Graphical;
 class Sprite;
 class ZTexture;
 class Surface;
+class Window;
+class Renderer;
+class Color;
 
 } // namespace ZII2
 

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <cstdint>
+
 #include "Defines.hpp"
 #include "ForwardDeclarations.hpp"
 #include "GraphicsSystem.hpp"

@@ -1,7 +1,9 @@
-#include <SDL.h>
 #include <cstdint>
-#include <type_traits>
 #include <cstddef>
+#include <type_traits>
+
+#include <SDL.h>
+
 #include "Types.hpp"
 
 namespace ZII2

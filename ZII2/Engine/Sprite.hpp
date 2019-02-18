@@ -2,6 +2,7 @@
 #define SPRITE_H
 
 #include <cstdint>
+
 #include "ForwardDeclarations.hpp"
 #include "Types.hpp"
 #include "Graphical.hpp"

@@ -2,6 +2,7 @@
 #define RENDERER_H
 
 #include <cstdint>
+
 #include "ForwardDeclarations.hpp"
 #include "Types.hpp"
 

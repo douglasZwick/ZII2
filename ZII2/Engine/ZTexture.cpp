@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string>
-#include <exception>
+
 #include <SDL_image.h>
+
 #include "ZTexture.hpp"
 #include "Surface.hpp"
 #include "Renderer.hpp"

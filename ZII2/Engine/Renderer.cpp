@@ -1,6 +1,7 @@
 #include <SDL.h>
-#include "Window.hpp"
+
 #include "Renderer.hpp"
+#include "Window.hpp"
 #include "ZTexture.hpp"
 
 namespace ZII2

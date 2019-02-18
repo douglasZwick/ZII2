@@ -3,8 +3,9 @@
 
 #include <string>
 #include <cstdint>
-#include "Types.hpp"
+
 #include "ForwardDeclarations.hpp"
+#include "Types.hpp"
 
 namespace ZII2
 {

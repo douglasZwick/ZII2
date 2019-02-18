@@ -1,9 +1,7 @@
 #include <iostream>
-#include <cmath>
-//#include <SDL_syswm.h>
+
 #include <SDL_image.h>
-//#include <bgfx/bgfx.h>
-//#include <bgfx/platform.h>
+
 #include "Engine.hpp"
 #include "Cog.hpp"
 #include "Window.hpp"

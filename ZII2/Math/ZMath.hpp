@@ -4,8 +4,13 @@
 namespace ZII2
 {
 
+namespace Math
+{
 
 
-}
+
+} // namespace Math
+
+} // namespace ZII2
 
 #endif // ZMATH_H

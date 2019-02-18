@@ -32,13 +32,6 @@ set(ZII2_INCLUDE_DIR ${CMAKE_SOURCE_DIR})
 ################################################################################
 
 set(ZII_ENGINE_SOURCE
-  ZII2/Engine/Defines.hpp
-  ZII2/Engine/ForwardDeclarations.hpp
-  ZII2/Engine/Types.hpp
-  ZII2/Engine/Window.cpp
-  ZII2/Engine/Window.hpp
-  ZII2/Engine/Renderer.cpp
-  ZII2/Engine/Renderer.hpp
   ZII2/Engine/Engine.cpp
   ZII2/Engine/Engine.hpp
   ZII2/Engine/System.cpp
@@ -55,12 +48,19 @@ set(ZII_ENGINE_SOURCE
   ZII2/Engine/Graphical.hpp
   ZII2/Engine/Sprite.cpp
   ZII2/Engine/Sprite.hpp
-  ZII2/Engine/Color.cpp
-  ZII2/Engine/Color.hpp
   ZII2/Engine/ZTexture.cpp
   ZII2/Engine/ZTexture.hpp
   ZII2/Engine/Surface.cpp
   ZII2/Engine/Surface.hpp
+  ZII2/Engine/Window.cpp
+  ZII2/Engine/Window.hpp
+  ZII2/Engine/Renderer.cpp
+  ZII2/Engine/Renderer.hpp
+  ZII2/Engine/Color.cpp
+  ZII2/Engine/Color.hpp
+  ZII2/Engine/Defines.hpp
+  ZII2/Engine/ForwardDeclarations.hpp
+  ZII2/Engine/Types.hpp
   ZII2/Engine/Assertions.cpp
 )
 

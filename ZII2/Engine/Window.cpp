@@ -1,4 +1,5 @@
 #include <SDL.h>
+
 #include "Window.hpp"
 
 namespace ZII2
