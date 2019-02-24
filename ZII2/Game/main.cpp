@@ -12,12 +12,17 @@ int main(int argc, char *argv[])
 
   //ZII2::Engine engine;
 
-  Matrix3x3<Pixit> lhs(
-    Pixit(3, 9),  Pixit(-5, 0), Pixit(-1, 1),
-    Pixit(2.25f), Pixit(0),     Pixit(2, 8),
-    Pixit(1, 1),  Pixit(-7, 7), Pixit(0, 15));
-  auto rhs = Pixit(2, 0);
-  auto result = lhs / rhs;
+  //Matrix3x3<Pixit> lhs(
+  //  Pixit(3, 9),  Pixit(-5, 0), Pixit(-1, 1),
+  //  Pixit(2.25f), Pixit(0),     Pixit(2, 8),
+  //  Pixit(1, 1),  Pixit(-7, 7), Pixit(0, 15));
+
+  Matrix3x3<float> lhs(
+    3.75f, -5.0f, -0.9375f,
+    2.25f, 0.0f, 2.5f,
+    1.0625f, -6.5625f, 0.9375f);
+  auto rhs = Matrix3x3<float>::Identity;
+  Matrix3x3<float> result = lhs * rhs * 2.0f;
   //Matrix3x3<int> lhs(
   //  1, 2, 3,
   //  4, 5, 6,
