@@ -71,6 +71,8 @@ set(ZII_MATH_SOURCE
   ZII2/Math/Pixit.hpp
   ZII2/Math/Matrix.inl
   ZII2/Math/Matrix.hpp
+  ZII2/Math/Vec2.inl
+  ZII2/Math/Vec2.hpp
 )
 
 add_library(

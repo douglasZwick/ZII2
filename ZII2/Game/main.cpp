@@ -4,53 +4,49 @@
 #include <ZII2/Engine/Engine.hpp>
 #include <ZII2/Math/Matrix.hpp>
 #include <ZII2/Math/Pixit.hpp>
+#include <ZII2/Math/Vec2.hpp>
 
 int main(int argc, char *argv[])
 {
   using ZII2::Matrix3x3;
   using ZII2::Pixit;
+  using ZII2::Vec2;
+  using ZII2::Float2;
+
+  typedef Vec2<Pixit> Pixit2;
 
   //ZII2::Engine engine;
 
-  //Matrix3x3<Pixit> lhs(
-  //  Pixit(3, 9),  Pixit(-5, 0), Pixit(-1, 1),
-  //  Pixit(2.25f), Pixit(0),     Pixit(2, 8),
-  //  Pixit(1, 1),  Pixit(-7, 7), Pixit(0, 15));
+  Pixit2 lhs(Pixit(3, 9), -Pixit(1, 1));
+  Pixit2 rhs(-Pixit(2, 11), Pixit(-2.5f));
+  Pixit scalar = Pixit(1.1f);
+  Pixit divisor = scalar;
+  Pixit2 sum = lhs + rhs;
+  Pixit2 difference = lhs - rhs;
+  Pixit2 reverseDifference = rhs - lhs;
+  Pixit2 product = lhs * rhs;
+  Pixit2 quotient = lhs / rhs;
+  Pixit2 inverseQuotient = rhs / lhs;
+  Pixit2 lhsScaled = lhs * scalar;
+  Pixit2 lhsDivided = lhs / divisor;
+  Pixit2 rhsScaled = rhs.Scale(scalar);
+  Pixit2 rhsDivided = rhs.Divide(divisor);
 
-  Matrix3x3<float> lhs(
-    3.75f, -5.0f, -0.9375f,
-    2.25f, 0.0f, 2.5f,
-    1.0625f, -6.5625f, 0.9375f);
-  auto rhs = Matrix3x3<float>::Identity;
-  Matrix3x3<float> result = lhs * rhs * 2.0f;
-  //Matrix3x3<int> lhs(
-  //  1, 2, 3,
-  //  4, 5, 6,
-  //  7, 8, 9);
-  //Matrix3x3<int> rhs(
-  //  1, 2, 3,
-  //  4, 5, 6,
-  //  7, 8, 9);
-  //Matrix3x3<int> sum = lhs + rhs;
-
-  std::cout << std::setw(8);
-  std::cout << result(0, 0);
-  std::cout << std::setw(8);
-  std::cout << result(1, 0);
-  std::cout << std::setw(8);
-  std::cout << result(2, 0) << std::endl;
-  std::cout << std::setw(8);
-  std::cout << result(0, 1);
-  std::cout << std::setw(8);
-  std::cout << result(1, 1);
-  std::cout << std::setw(8);
-  std::cout << result(2, 1) << std::endl;
-  std::cout << std::setw(8);
-  std::cout << result(0, 2);
-  std::cout << std::setw(8);
-  std::cout << result(1, 2);
-  std::cout << std::setw(8);
-  std::cout << result(2, 2) << std::endl;
+  std::cout << "LHS: " << lhs << std::endl;
+  std::cout << "RHS: " << rhs << std::endl;
+  std::cout << "Scalar: " << scalar << std::endl;
+  std::cout << "Divisor: " << divisor << std::endl;
+  std::cout << std::endl;
+  std::cout << "Sum: " << sum << std::endl;
+  std::cout << "Difference: " << difference << std::endl;
+  std::cout << "Reverse Difference: " << reverseDifference << std::endl;
+  std::cout << "Product: " << product << std::endl;
+  std::cout << "Quotient: " << quotient << std::endl;
+  std::cout << "Inverse Quotient: " << inverseQuotient << std::endl;
+  std::cout << "LHS Scaled: " << lhsScaled << std::endl;
+  std::cout << "LHS Divided: " << lhsDivided << std::endl;
+  std::cout << "RHS Scaled: " << rhsScaled << std::endl;
+  std::cout << "RHS Divided: " << rhsDivided << std::endl;
 
   int status = 0;// engine.RunSDL();
 

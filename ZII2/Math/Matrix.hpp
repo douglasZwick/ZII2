@@ -43,9 +43,9 @@ public:
   Matrix3x3 operator!() const;
 
   template <typename U>
-  void Scale(U const & scalar);
+  Matrix3x3 Scale(U const & scalar) const;
   template <typename U>
-  void Divide(U const & divisor);
+  Matrix3x3 Divide(U const & divisor) const;
   T Det() const;
   Matrix3x3 Transpose() const;
 
