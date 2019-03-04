@@ -40,6 +40,7 @@ set(ZII_ENGINE_SOURCE
   ZII2/Engine/GraphicsSystem.hpp
   ZII2/Engine/Cog.cpp
   ZII2/Engine/Cog.hpp
+  ZII2/Engine/ComponentID.hpp
   ZII2/Engine/Component.cpp
   ZII2/Engine/Component.hpp
   ZII2/Engine/Transform.cpp

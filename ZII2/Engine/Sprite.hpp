@@ -13,6 +13,8 @@ namespace ZII2
 class Sprite : public Graphical
 {
 public:
+  static const ComponentID ID;
+
   uint8_t mR;
   uint8_t mG;
   uint8_t mB;

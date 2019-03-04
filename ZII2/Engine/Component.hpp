@@ -2,6 +2,7 @@
 #define COMPONENT_H
 
 #include "ForwardDeclarations.hpp"
+#include "ComponentID.hpp"
 
 namespace ZII2
 {

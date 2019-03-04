@@ -1,8 +1,14 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include "ZII2/Math/Pixit.hpp"
+#include "ZII2/Math/Vec2.hpp"
+
 namespace ZII2
 {
+
+typedef Vec2<float> Float2;
+typedef Vec2<Pixit> Pixit2;
 
 struct ZRect
 {

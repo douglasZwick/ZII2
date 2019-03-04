@@ -6,7 +6,7 @@ namespace ZII2
 {
 
 Graphical::Graphical(Cog * owner)
-  : Component(owner), mTransform(owner->mTransform)
+  : Component(owner), mTransform(owner->Get<Transform>())
 {}
 
 Graphical::~Graphical() {}

@@ -66,6 +66,11 @@ Pixit::operator float() const
   return float(mPixels) + float(mSubpixels) / float(sSubpixelResolution);
 }
 
+Pixit::operator double() const
+{
+  return double(mPixels) + double(mSubpixels) / double(sSubpixelResolution);
+}
+
 Pixit const & Pixit::operator=(Pixit const & rhs)
 {
   mPixels = rhs.mPixels;

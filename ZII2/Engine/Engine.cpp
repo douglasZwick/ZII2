@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include <SDL_image.h>
 
@@ -81,19 +82,21 @@ int Engine::RunSDL()
   // main loop flag
   bool quit = false;
 
+  auto cogs = std::vector<Cog *>();
+
   for (int i = 0; i < 360; ++i)
   {
-    Cog cog;
-    cog.mTransform = new Transform(&cog);
-    cog.mSprite = new Sprite(&cog);
-    cog.mSprite->mTexture = sLeaSmug;
-    cog.mTransform->mPosX = 100 + i;
-    cog.mTransform->mPosY = 340;
-    cog.mTransform->mAngle = i;
-    cog.mTransform->mScaleX = 1.0f + i * 0.01f;
-    cog.mTransform->mScaleY = 1.0f + i * 0.01f;
+    Cog * cog = new Cog;
+    Transform * transform = cog->Add<Transform>();
+    Sprite * sprite = cog->Add<Sprite>();
+    sprite->mTexture = sLeaSmug;
+    transform->Position().mX = Pixit(100 + i);
+    transform->Position().mY = Pixit(340);
+    transform->Rotation() = Pixit(i);
+    transform->Scale() = Pixit2(Pixit(1.0f + i * 0.01f));
 
-    mGraphics.Add(cog.mSprite);
+    mGraphics.Add(sprite);
+    cogs.push_back(cog);
   }
 
   double dt = 1.0 / 60.0;

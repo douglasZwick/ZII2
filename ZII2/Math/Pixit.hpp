@@ -15,6 +15,10 @@ namespace ZII2
 class Pixit
 {
 public:
+  static std::string sDelimiter;
+  static const Pixit Zero;
+  static const Pixit One;
+
   Pixit();
   Pixit(Pixit const & rhs);
   Pixit(int pixels, unsigned int subpixels);
@@ -25,6 +29,7 @@ public:
   explicit operator int() const;
   explicit operator bool() const;
   explicit operator float() const;
+  explicit operator double() const;
 
   Pixit const & operator=(Pixit const & rhs);
   void operator+=(Pixit const & rhs);
@@ -49,15 +54,11 @@ public:
   static unsigned int GetSubpixelResolution();
   static bool SetSubpixelResolution(int resolution);
 
-  static std::string sDelimiter;
-  static const Pixit Zero;
-  static const Pixit One;
-
 private:
+  static unsigned int sSubpixelResolution;
+
   signed   int mPixels;
   unsigned int mSubpixels;
-
-  static unsigned int sSubpixelResolution;
 
   friend Pixit operator+(Pixit const & lhs, Pixit const & rhs);
   friend Pixit operator-(Pixit const & lhs, Pixit const & rhs);

@@ -6,6 +6,8 @@
 namespace ZII2
 {
 
+const ComponentID Sprite::ID = ComponentID::Sprite;
+
 Sprite::Sprite(Cog * owner)
   : Graphical(owner), mR(0xFF), mG(0xFF), mB(0xFF), mA(0xFF),
     mBlendMode(ZBlendMode::Blend), mFlipX(false), mFlipY(false),
@@ -16,13 +18,21 @@ Sprite::~Sprite() {}
 
 void Sprite::Render(Renderer * renderer)
 {
-  int x = mTransform->mPosX;
-  int y = mTransform->mPosY;
+  auto position = mTransform->Position();
+  auto rotation = mTransform->Rotation();
+  auto scale = mTransform->Scale();
+  //int x = mTransform->mPosX;
+  int x = int(position.mX);
+  //int y = mTransform->mPosY;
+  int y = int(position.mY);
   int w = mTexture->GetWidth();
   int h = mTexture->GetHeight();
-  double angle = mTransform->mAngle;
-  float scaleX = mTransform->mScaleX;
-  float scaleY = mTransform->mScaleY;
+  //double angle = mTransform->mAngle;
+  double angle = double(rotation);
+  //float scaleX = mTransform->mScaleX;
+  float scaleX = float(scale.mX);
+  //float scaleY = mTransform->mScaleY;
+  float scaleY = float(scale.mY);
   ZRect * srcrect = nullptr;
   ZPoint * center = nullptr;
   ZRect dstrect = { x, y, w, h };
