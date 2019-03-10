@@ -2,6 +2,7 @@
 #define MATRIX_INL
 
 #include <cassert>
+#include <cmath>
 
 #include "Matrix.hpp"
 
@@ -180,6 +181,14 @@ inline bool Matrix3x3<T>::operator!=(Matrix3x3<T> const & rhs) const
 }
 
 template <typename T>
+inline Vec2<T> Matrix3x3<T>::operator*(Vec2<T> const & rhs) const
+{
+  T x = mData[0][0] * rhs.mX + mData[1][0] * rhs.mY + mData[2][0];
+  T y = mData[0][1] * rhs.mX + mData[1][1] * rhs.mY + mData[2][1];
+  return Vec2<T>(x, y);
+}
+
+template <typename T>
 inline Matrix3x3<T> Matrix3x3<T>::operator!() const
 {
   return Transpose();
@@ -223,6 +232,49 @@ inline Matrix3x3<T> Matrix3x3<T>::Transpose() const
     mData[0][0], mData[0][1], mData[0][2],
     mData[1][0], mData[1][1], mData[1][2],
     mData[2][0], mData[2][1], mData[2][2]);
+}
+
+template <typename T>
+inline Matrix3x3<T> Matrix3x3<T>::TranslationMatrix(Vec2<T> const & translation)
+{
+  T x = translation.mX;
+  T y = translation.mY;
+  T t0 = T(0);
+  T t1 = T(1);
+
+  return Matrix3x3<T>(
+    t1, t0, x,
+    t0, t1, y,
+    t0, t0, t1);
+}
+
+template <typename T>
+inline Matrix3x3<T> Matrix3x3<T>::RotationMatrix(T const & rotation)
+{
+  float fRotation = float(rotation);
+  T tCos = T(cosf(fRotation));
+  T tSin = T(sinf(fRotation));
+  T t0 = T(0);
+  T t1 = T(1);
+
+  return Matrix3x3<T>(
+    tCos, -tSin,  t0,
+    tSin,  tCos,  t0,
+    t0,    t0,    t1);
+}
+
+template <typename T>
+inline Matrix3x3<T> Matrix3x3<T>::ScaleMatrix(Vec2<T> const & scale)
+{
+  T x = scale.mX;
+  T y = scale.mY;
+  T t0 = T(0);
+  T t1 = T(1);
+
+  return Matrix3x3<T>(
+    x,  t0, t0,
+    t0, y,  t0,
+    t0, t0, t1);
 }
 
 template <typename T>

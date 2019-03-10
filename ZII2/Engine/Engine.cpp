@@ -90,15 +90,15 @@ int Engine::RunSDL()
     Transform * transform = cog->Add<Transform>();
     Sprite * sprite = cog->Add<Sprite>();
     sprite->mTexture = sLeaSmug;
-    transform->Position().mX = Pixit(100 + i);
-    transform->Position().mY = Pixit(340);
-    transform->Rotation() = Pixit(i);
-    transform->Scale() = Pixit2(Pixit(1.0f + i * 0.01f));
+    transform->SetPositionX(Pixit(100 + i));
+    transform->SetPositionY(Pixit(340));
+    transform->SetRotation(Pixit(i));
+    transform->SetScale(Pixit2(Pixit(1.0f + i * 0.01f)));
 
     mGraphics.Add(sprite);
     cogs.push_back(cog);
   }
-
+  
   double dt = 1.0 / 60.0;
 
   // event handler

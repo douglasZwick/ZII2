@@ -4,36 +4,40 @@
 #include "ForwardDeclarations.hpp"
 #include "Component.hpp"
 #include "ZII2/Math/Pixit.hpp"
+#include "ZII2/Math/Matrix.hpp"
 #include "Types.hpp"
 
 namespace ZII2
 {
-// hi jorsh
 class Transform : public Component
 {
 public:
   static const ComponentID ID;
 
-  int mPosX;
-  int mPosY;
-  double mAngle;
-  float mScaleX;
-  float mScaleY;
-  
   Transform(Cog * owner);
   ~Transform();
 
-  Pixit2 const & Position() const;
-  Pixit2 & Position();
-  Pixit const & Rotation() const;
-  Pixit & Rotation();
-  Pixit2 const & Scale() const;
-  Pixit2 & Scale();
+  void Update();
+
+  Pixit2 const & GetPosition() const;
+  void SetPosition(Pixit2 const & position);
+  void SetPositionX(Pixit const & x);
+  void SetPositionY(Pixit const & y);
+  Pixit const & GetRotation() const;
+  void SetRotation(Pixit const & rotation);
+  Pixit2 const & GetScale() const;
+  void SetScale(Pixit2 const & scale);
+  void SetScaleX(Pixit const & x);
+  void SetScaleY(Pixit const & y);
+
+  Pixit2 TransformPoint(Pixit2 const & point) const;
 
 private:
   Pixit2 mPosition;
   Pixit mRotation;
   Pixit2 mScale;
+  bool mDirty;
+  Matrix3x3<Pixit> mLocalMatrix;
 }; // class Transform
 
 } // namespace ZII2

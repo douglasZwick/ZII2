@@ -2,6 +2,7 @@
 #include "Transform.hpp"
 #include "Texture.hpp"
 #include "Renderer.hpp"
+#include "ZII2/Math/Matrix.hpp"
 
 namespace ZII2
 {
@@ -18,20 +19,20 @@ Sprite::~Sprite() {}
 
 void Sprite::Render(Renderer * renderer)
 {
-  auto position = mTransform->Position();
-  auto rotation = mTransform->Rotation();
-  auto scale = mTransform->Scale();
-  //int x = mTransform->mPosX;
-  int x = int(position.mX);
-  //int y = mTransform->mPosY;
-  int y = int(position.mY);
+  mTransform->Update();
+
+  Pixit2 origin = Pixit2::Zero;
+  auto originTransformed = mTransform->TransformPoint(origin);
+
+  auto position = mTransform->GetPosition();
+  auto rotation = mTransform->GetRotation();
+  auto scale = mTransform->GetScale();
+  int x = int(originTransformed.mX);
+  int y = int(originTransformed.mY);
   int w = mTexture->GetWidth();
   int h = mTexture->GetHeight();
-  //double angle = mTransform->mAngle;
   double angle = double(rotation);
-  //float scaleX = mTransform->mScaleX;
   float scaleX = float(scale.mX);
-  //float scaleY = mTransform->mScaleY;
   float scaleY = float(scale.mY);
   ZRect * srcrect = nullptr;
   ZPoint * center = nullptr;

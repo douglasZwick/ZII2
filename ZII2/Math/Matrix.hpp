@@ -1,6 +1,8 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#include "Vec2.hpp"
+
 namespace ZII2
 {
 
@@ -40,6 +42,8 @@ public:
   bool operator==(Matrix3x3 const & rhs) const;
   bool operator!=(Matrix3x3 const & rhs) const;
 
+  Vec2<T> operator*(Vec2<T> const & rhs) const;
+
   Matrix3x3 operator!() const;
 
   template <typename U>
@@ -48,6 +52,10 @@ public:
   Matrix3x3 Divide(U const & divisor) const;
   T Det() const;
   Matrix3x3 Transpose() const;
+
+  static Matrix3x3 TranslationMatrix(Vec2<T> const & translation);
+  static Matrix3x3 RotationMatrix(T const & rotation);
+  static Matrix3x3 ScaleMatrix(Vec2<T> const & scale);
 
   template <typename T>
   friend Matrix3x3<T> operator*(Matrix3x3<T> const & a, Matrix3x3<T> const & b);
