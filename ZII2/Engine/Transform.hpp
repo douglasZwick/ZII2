@@ -17,7 +17,7 @@ public:
   Transform(Cog * owner);
   ~Transform();
 
-  void Update();
+  //void Update();
 
   Pixit2 const & GetPosition() const;
   void SetPosition(Pixit2 const & position);
@@ -30,14 +30,14 @@ public:
   void SetScaleX(Pixit const & x);
   void SetScaleY(Pixit const & y);
 
-  Pixit2 TransformPoint(Pixit2 const & point) const;
+  //Pixit2 TransformPoint(Pixit2 const & point) const;
 
 private:
   Pixit2 mPosition;
   Pixit mRotation;
   Pixit2 mScale;
-  bool mDirty;
-  Matrix3x3<Pixit> mLocalMatrix;
+  //bool mDirty;
+  //Matrix3x3<Pixit> mLocalMatrix;
 }; // class Transform
 
 } // namespace ZII2

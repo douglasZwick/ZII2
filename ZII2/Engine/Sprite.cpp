@@ -19,23 +19,23 @@ Sprite::~Sprite() {}
 
 void Sprite::Render(Renderer * renderer)
 {
-  mTransform->Update();
+  //mTransform->Update();
 
-  Pixit2 origin = Pixit2::Zero;
-  auto originTransformed = mTransform->TransformPoint(origin);
+  //Pixit2 origin = Pixit2::Zero;
+  //auto originTransformed = mTransform->TransformPoint(origin);
 
   auto position = mTransform->GetPosition();
   auto rotation = mTransform->GetRotation();
   auto scale = mTransform->GetScale();
-  int x = int(originTransformed.mX);
-  int y = int(originTransformed.mY);
+  int x = int(position.mX);
+  int y = int(position.mY);
   int w = mTexture->GetWidth();
   int h = mTexture->GetHeight();
   double angle = double(rotation);
   float scaleX = float(scale.mX);
   float scaleY = float(scale.mY);
   ZRect * srcrect = nullptr;
-  ZPoint * center = nullptr;
+  ZPoint center = ZPoint{ 0, 0 };
   ZRect dstrect = { x, y, w, h };
 
   if (srcrect != nullptr)
@@ -53,7 +53,7 @@ void Sprite::Render(Renderer * renderer)
   mTexture->SetAlpha(mA);
   mTexture->SetBlendMode(mBlendMode);
 
-  renderer->Render(mTexture, srcrect, &dstrect, angle, center, flip);
+  renderer->Render(mTexture, srcrect, &dstrect, angle, &center, flip);
 }
 
 } // namespace ZII2

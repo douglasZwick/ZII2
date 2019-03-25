@@ -82,22 +82,31 @@ int Engine::RunSDL()
   // main loop flag
   bool quit = false;
 
-  auto cogs = std::vector<Cog *>();
+  //auto cogs = std::vector<Cog *>();
 
-  for (int i = 0; i < 360; ++i)
-  {
-    Cog * cog = new Cog;
-    Transform * transform = cog->Add<Transform>();
-    Sprite * sprite = cog->Add<Sprite>();
-    sprite->mTexture = sLeaSmug;
-    transform->SetPositionX(Pixit(100 + i));
-    transform->SetPositionY(Pixit(340));
-    transform->SetRotation(Pixit(i));
-    transform->SetScale(Pixit2(Pixit(1.0f + i * 0.01f)));
+  //for (int i = 0; i < 360; ++i)
+  //{
+  //  Cog * cog = new Cog;
+  //  Transform * transform = cog->Add<Transform>();
+  //  Sprite * sprite = cog->Add<Sprite>();
+  //  sprite->mTexture = sLeaSmug;
+  //  transform->SetPositionX(Pixit(100 + i));
+  //  transform->SetPositionY(Pixit(340));
+  //  transform->SetRotation(Pixit(i));
+  //  transform->SetScale(Pixit2(Pixit(1.0f + i * 0.01f)));
 
-    mGraphics.Add(sprite);
-    cogs.push_back(cog);
-  }
+  //  mGraphics.Add(sprite);
+  //  cogs.push_back(cog);
+  //}
+
+  Cog * cog = new Cog();
+  Transform * transform = cog->Add<Transform>();
+  Sprite * sprite = cog->Add<Sprite>();
+  sprite->mTexture = sLeaSmug;
+  transform->SetPosition(Pixit2::Zero);
+  transform->SetRotation(Pixit::Zero);
+  transform->SetScale(Pixit2(Pixit(3), Pixit(3)));
+  mGraphics.Add(sprite);
   
   double dt = 1.0 / 60.0;
 
