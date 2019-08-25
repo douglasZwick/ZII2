@@ -20,6 +20,8 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 #   The developer shouldn't need to change this, we use it to tell CMake.
 ################################################################################
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
+find_package(OpenGL REQUIRED)
+find_package(GLEW REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 # find_package(bgfx REQUIRED)
@@ -63,6 +65,8 @@ set(ZII_ENGINE_SOURCE
   ZII2/Engine/ForwardDeclarations.hpp
   ZII2/Engine/Types.hpp
   ZII2/Engine/Assertions.cpp
+  ZII2/Engine/ShaderUtility.hpp
+  ZII2/Engine/ShaderUtility.cpp
 )
 
 set(ZII_MATH_SOURCE
@@ -132,6 +136,8 @@ target_include_directories(
   PUBLIC
     ${ZII2_INCLUDE_DIR}
   PRIVATE
+    ${OPENGL_INCLUDE_DIR}
+    ${GLEW_INCLUDE_DIR}
     ${SDL2_INCLUDE_DIR}
     ${SDL2_IMAGE_INCLUDE_DIR}
     # ${BGFX_INCLUDE_DIR}
@@ -147,6 +153,8 @@ target_include_directories(
 
 target_link_libraries(
   ZII2_Engine
+    OpenGL::GL
+    ${GLEW_LIBRARY_RELEASE}
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARY}
 )

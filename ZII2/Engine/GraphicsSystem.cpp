@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <SDL.h>
+#include <GL/glew.h>
 
 #include "GraphicsSystem.hpp"
 #include "Engine.hpp"
@@ -39,6 +40,14 @@ GraphicsSystem::~GraphicsSystem()
 
 bool GraphicsSystem::Initialize(Window * window)
 {
+  glewExperimental = true;
+  if (GLenum errorStatus = glewInit() != GLEW_OK)
+  {
+    // Problem: glewInit failed, something is seriously wrong.
+    std::cout << "GLEW failed to initialize. Error: " << glewGetErrorString(errorStatus) << std::endl;
+    return false;
+  }
+
   // create the vsync-enabled renderer for the window
   mImpl->Renderer = new Renderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
@@ -49,7 +58,7 @@ bool GraphicsSystem::Initialize(Window * window)
   }
 
   // initialize the renderer color
-  mImpl->Renderer->SetDrawColor(mClearR, mClearG, mClearB, mClearA);
+  //mImpl->Renderer->SetDrawColor(mClearR, mClearG, mClearB, mClearA);
 
   if (!LoadImages())
   {

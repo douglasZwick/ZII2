@@ -1,11 +1,11 @@
-#include <iostream>
-#include <iomanip>
-#include <string>
+//#include <iostream>
+//#include <iomanip>
+//#include <string>
 #include <ZII2/Engine/Engine.hpp>
-#include <ZII2/Math/Matrix.hpp>
-#include <ZII2/Math/Pixit.hpp>
-#include <ZII2/Math/Vec2.hpp>
-#include "ZII2/Engine/Types.hpp"
+//#include <ZII2/Math/Matrix.hpp>
+//#include <ZII2/Math/Pixit.hpp>
+//#include <ZII2/Math/Vec2.hpp>
+//#include "ZII2/Engine/Types.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
   //std::cout << "RHS Scaled: " << rhsScaled << std::endl;
   //std::cout << "RHS Divided: " << rhsDivided << std::endl;
 
-  int status = engine.RunSDL();
+  int status = engine.RunOpenGL();
   //int status = 0;
 
   return status;

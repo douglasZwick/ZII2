@@ -19,6 +19,8 @@ public:
   bool Failed() const;
   
 private:
+  void CreateContext();
+
   struct Impl;
   
   Impl * mImpl;

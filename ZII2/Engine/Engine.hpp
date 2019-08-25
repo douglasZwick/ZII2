@@ -17,6 +17,10 @@ public:
   Engine();
   ~Engine();
 
+  bool InitializeOpenGL();
+  int RunOpenGL();
+  void CloseOpenGL();
+
   bool InitializeSDL();
   int RunSDL();
   void CloseSDL();
