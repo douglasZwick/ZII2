@@ -273,26 +273,9 @@ Window * Engine::GetWindow() const
 
 void Engine::Update(double dt)
 {
-  glClear(GL_COLOR_BUFFER_BIT);
+  mGraphics.Update(dt);
 
-  glUseProgram(mImpl->ProgramID);
-  glEnableVertexAttribArray(0);
-  glBindBuffer(GL_ARRAY_BUFFER, mImpl->VertexBuffer);
-  glVertexAttribPointer
-  (
-    0,
-    3,
-    GL_FLOAT,
-    GL_FALSE,
-    0,
-    (void*)0
-  );
-
-  glDrawArrays(GL_TRIANGLES, 0, 3);
-  glDisableVertexAttribArray(0);
-
-  SDL_GL_SwapWindow((SDL_Window*)(mImpl->Window->GetHandle()));
-  //mGraphics.Update(dt);
+  SDL_GL_SwapWindow((SDL_Window *)(mImpl->Window->GetHandle()));
 }
 
 //bool Engine::InitializeBGFX()

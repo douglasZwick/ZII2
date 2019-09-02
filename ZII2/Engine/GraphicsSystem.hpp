@@ -33,7 +33,9 @@ private:
 
   Impl * mImpl;
   std::vector<Graphical *> mGraphicals;
-
+  
+  void GenerateQuad();
+  void PrepareShaders();
   Renderer * GetRenderer() const;
 }; // class GraphicsSystem
 

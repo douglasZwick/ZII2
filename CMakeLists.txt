@@ -22,6 +22,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
+find_package(glm REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 # find_package(bgfx REQUIRED)
@@ -95,7 +96,15 @@ add_executable(
   ZII2/Game/main.cpp
 )
 
-target_link_libraries(ZII2_Engine ZII2_Math)
+target_link_libraries(
+  #[[TARGET]] ZII2_Engine
+  #[[LINK]]
+    ZII2_Math
+)
+target_link_libraries(
+  ZII2_Math
+    glm
+)
 target_link_libraries(Practice ZII2_Engine)
 
 option(ZII2_BUILD_TESTS

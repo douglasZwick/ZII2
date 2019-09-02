@@ -2,12 +2,15 @@
 
 #include <SDL.h>
 #include <GL/glew.h>
+#include <vector>
 
 #include "GraphicsSystem.hpp"
 #include "Engine.hpp"
 #include "Graphical.hpp"
 #include "Renderer.hpp"
 #include "Texture.hpp"
+#include "Types.hpp"
+#include "ShaderUtility.hpp"
 
 namespace ZII2
 {
@@ -15,6 +18,9 @@ namespace ZII2
 struct GraphicsSystem::Impl
 {
   Renderer * Renderer = nullptr;
+  GLuint VertexArrayID;
+  GLuint VertexBufferID;
+  GLuint ShaderID;
 };
 
 GraphicsSystem::GraphicsSystem(Engine * engine)
@@ -66,6 +72,9 @@ bool GraphicsSystem::Initialize(Window * window)
     return false;
   }
 
+  GenerateQuad();
+  PrepareShaders();
+
   return true;
 }
 
@@ -76,18 +85,28 @@ void GraphicsSystem::Add(Graphical * graphical)
 
 void GraphicsSystem::Update(double dt)
 {
-  Renderer * renderer = GetRenderer();
-  // clear the screen
-  renderer->SetDrawColor(mClearR, mClearG, mClearB, mClearA);
-  renderer->Clear();
+  //Renderer * renderer = GetRenderer();
+  //// clear the screen
+  //renderer->SetDrawColor(mClearR, mClearG, mClearB, mClearA);
+  //renderer->Clear();
 
-  for (auto & graphical : mGraphicals)
-  {
-    graphical->Render(mImpl->Renderer);
-  }
+  //for (auto & graphical : mGraphicals)
+  //{
+  //  graphical->Render(mImpl->Renderer);
+  //}
 
-  // update the window
-  renderer->Present();
+  //// update the window
+  //renderer->Present();
+
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  glBindVertexArray(mImpl->VertexArrayID);
+
+  glUseProgram(mImpl->ShaderID);
+
+  glUniform4f(10, 0.95f, 0.91f, 0.1f, 1.0f);
+
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 bool GraphicsSystem::LoadImages() const
@@ -117,6 +136,53 @@ void GraphicsSystem::ShutDown()
   mImpl->Renderer = nullptr;
   delete mImpl;
   mImpl = nullptr;
+}
+
+void GraphicsSystem::GenerateQuad()
+{
+  glGenVertexArrays(1, &mImpl->VertexArrayID);
+  glBindVertexArray(mImpl->VertexArrayID);
+
+  const Vertex bufferData[] =
+  {
+    { { -0.5f, -0.5f, 0 }, { 0, 0 } },
+    { { -0.5f,  0.5f, 0 }, { 0, 1 } },
+    { {  0.5f, -0.5f, 0 }, { 1, 0 } },
+    { {  0.5f,  0.5f, 0 }, { 1, 1 } },
+  };
+
+  glGenBuffers(1, &mImpl->VertexBufferID);
+  glBindBuffer(GL_ARRAY_BUFFER, mImpl->VertexBufferID);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(bufferData), bufferData, GL_STATIC_DRAW);
+
+  glEnableVertexAttribArray(0);
+
+  glVertexAttribPointer
+  (
+    0,
+    3,
+    GL_FLOAT,
+    GL_FALSE,
+    sizeof(Vertex),
+    (GLvoid const *)offsetof(Vertex, Position)
+  );
+
+  glEnableVertexAttribArray(1);
+
+  glVertexAttribPointer
+  (
+    1,
+    2,
+    GL_FLOAT,
+    GL_FALSE,
+    sizeof(Vertex),
+    (GLvoid const *)offsetof(Vertex, Uv)
+  );
+}
+
+void GraphicsSystem::PrepareShaders()
+{
+  mImpl->ShaderID = ShaderUtility::Load("Shaders/BasicVertex.glsl", "Shaders/ConstantColorFragment.glsl");
 }
 
 Renderer * GraphicsSystem::GetRenderer() const

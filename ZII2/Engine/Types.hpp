@@ -1,6 +1,10 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
+
 #include "ZII2/Math/Pixit.hpp"
 #include "ZII2/Math/Vec2.hpp"
 
@@ -35,6 +39,12 @@ enum class ZBlendMode
   Add      = 0x00000002,
   Multiply = 0x00000004,
   Invalid  = 0x7FFFFFFF,
+};
+
+struct Vertex
+{
+  glm::vec3 Position;
+  glm::vec2 Uv;
 };
 
 } // namespace ZII2
