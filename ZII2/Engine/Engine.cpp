@@ -39,7 +39,7 @@ Texture * Engine::sLeaSmug;
 //const std::string Engine::sAnimationPath = "lea_run.png";
 
 Engine::Engine()
-  : mGraphics(this), mImpl(new Impl)
+  : mObjects(this), mGraphics(this), mImpl(new Impl)
 {}
 
 Engine::~Engine()

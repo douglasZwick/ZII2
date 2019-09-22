@@ -39,6 +39,8 @@ set(ZII_ENGINE_SOURCE
   ZII2/Engine/Engine.hpp
   ZII2/Engine/System.cpp
   ZII2/Engine/System.hpp
+  ZII2/Engine/ObjectSystem.cpp
+  ZII2/Engine/ObjectSystem.hpp
   ZII2/Engine/GraphicsSystem.cpp
   ZII2/Engine/GraphicsSystem.hpp
   ZII2/Engine/Cog.cpp

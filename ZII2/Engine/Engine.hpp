@@ -6,6 +6,7 @@
 
 #include "Defines.hpp"
 #include "ForwardDeclarations.hpp"
+#include "ObjectSystem.hpp"
 #include "GraphicsSystem.hpp"
 
 namespace ZII2
@@ -34,6 +35,7 @@ public:
 
   static Texture * sLeaSmug;
 
+  ObjectSystem mObjects;
   GraphicsSystem mGraphics;
 
 private:

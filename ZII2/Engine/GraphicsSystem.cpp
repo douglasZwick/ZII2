@@ -104,7 +104,7 @@ void GraphicsSystem::Update(double dt)
 
   glUseProgram(mImpl->ShaderID);
 
-  glUniform4f(10, 0.95f, 0.91f, 0.1f, 1.0f);
+  glUniform4f(10, 1.0f, 1.0f, 1.0f, 1.0f);
 
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }

@@ -6,6 +6,7 @@ namespace ZII2
 
 class Engine;
 class System;
+class ObjectSystem;
 class GraphicsSystem;
 class Cog;
 class Component;
